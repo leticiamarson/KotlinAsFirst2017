@@ -52,11 +52,7 @@ fun main(args: Array<String>) {
  * Рассчитать время в секундах, прошедшее с начала суток (30035 в данном случае).
  */
 fun seconds(hours: Int, minutes: Int, seconds: Int): Int{
-    val h:Int = hours*3600
-    val m:Int = minutes*60
-    val s:Int = seconds
-
-    var stot:Int = h+m+s
+    var stot:Int = (hours*3600)+(minutes*60)+seconds
     return stot
 }
 
@@ -68,13 +64,9 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int{
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  */
 fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double{
-    val s:Int = sagenes
-    val a:Int = arshins
-    val v:Int = vershoks
-
-    var vv:Double = v*0.04445
-    var aa:Double = a*0.7112
-    var ss:Double = s*2.1336
+    var vv:Double = vershoks*0.04445
+    var aa:Double = arshins*0.7112
+    var ss:Double = sagenes*2.1336
     var metros:Double = vv+aa+ss
     return metros
 }
@@ -86,10 +78,10 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double{
  * Вывести значение того же угла в радианах (например, 0.63256).
  */
 fun angleInRadian(grad: Int, min: Int, sec: Int): Double{
-    val g:Double = (grad.toDouble())*0.0174533
-    val m:Double = (min.toDouble())*0.000290888
-    val s:Double = (sec.toDouble())*4.8481e-6
-    var rad:Double = g+m+s
+    val g:Double = ((grad.toDouble()*Math.PI)/180)
+    val m:Double = ((min.toDouble()*Math.PI)/180)
+    val s:Double = ((sec.toDouble()*Math.PI)/180)/60
+    var rad:Double = g+((m - m.toInt())/60)+((s - s.toInt())/60)
     return rad
 }
 
@@ -100,24 +92,20 @@ fun angleInRadian(grad: Int, min: Int, sec: Int): Double{
  * Например, расстояние между (3, 0) и (0, 4) равно 5
  */
 fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double{
-    var x1:Double = x1
-    var x2:Double = x2
-    var y1:Double = y1
-    var y2:Double = y2
     var c:Double = 0.0
     var b:Double = 0.0
 
     if(x1>x2){
-        c= x1-x2
+        c=x1-x2
     }
     else{
-        c= x2-x1
+        c=x2-x1
     }
     if(y1>y2){
-        b= y1-y2
+        b=y1-y2
     }
     else{
-        b= y2-y1
+        b=y2-y1
     }
     var a:Double = sqrt((b*b)+(c*c))
     return a
@@ -130,12 +118,11 @@ fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double{
  * Определить третью цифру справа в этом числе (в данном случае 8).
  */
 fun thirdDigit(number: Int): Int{
-    var x = number
     var n1:Int =0
     var n2:Int =0
     var n3:Int =0
-    n1 = x%1000
-    n2 = x%100
+    n1 = number%1000
+    n2 = number%100
     n3 = (n1-n2)/100
 
     return n3
@@ -149,12 +136,7 @@ fun thirdDigit(number: Int): Int{
  * Определите время поезда в пути в минутах (в данном случае 216).
  */
 fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int{
-    var hd:Int = hoursDepart
-    var md:Int = minutesDepart
-    var ha:Int = hoursArrive
-    var ma:Int = minutesArrive
-    var result:Int
-    result = ((ha*60)+ma) - ((hd*60)+md)
+    var result:Int = ((hoursArrive*60)+minutesArrive) - ((hoursDepart*60)+minutesDepart)
     return result
 }
 
@@ -166,11 +148,9 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
 fun accountInThreeYears(initial: Int, percent: Int): Double{
-    var ini = initial.toDouble()
-    var per = percent.toDouble()
     var renda = DoubleArray(3)
     var i:Int =1
-    renda[0]= ((ini*percent)/100)+ini
+    renda[0]= (((initial.toDouble())*percent)/100)+(initial.toDouble())
 
     while(i<3){
         renda[i]= ((renda[i-1]*percent)/100)+renda[i-1]
@@ -186,13 +166,11 @@ fun accountInThreeYears(initial: Int, percent: Int): Double{
  *Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
 fun numberRevert(number: Int): Int{
-    var x:Int = number
     var ar = IntArray(3)
-    var resposta:Int
 
-    ar[0] = x%10
-    ar[1] = (x%100) - ar[0]
-    ar[2] = (x%1000) - (ar[1]+ar[0])
-    resposta = (ar[0]*100) + ar[1] + (ar[2]/100)
-    return resposta
+    ar[0] = number%10
+    ar[1] = (number%100) - ar[0]
+    ar[2] = (number%1000) - (ar[1]+ar[0])
+    var answer:Int = (ar[0]*100) + ar[1] + (ar[2]/100)
+    return answer
 }
