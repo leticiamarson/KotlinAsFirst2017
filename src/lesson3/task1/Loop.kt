@@ -65,7 +65,9 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int{
     var y = n.toString()
     var tamanho:Int = y.length
-
+    if(n<0){
+        tamanho = y.length -1
+    }
     return tamanho
 }
 
@@ -76,11 +78,9 @@ fun digitNumber(n: Int): Int{
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int{
-    val n:Int = n
     var i:Int= 2
     var j:Int = 0
     var vetor = IntArray(200)
-
     vetor[0] = 1
     vetor[1] = 1
     while(i<200){
@@ -109,20 +109,16 @@ fun fib(n: Int): Int{
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int{
-    val x=m
-    val y=n
-    var m = m
-    var n = n
-    var resultado:Int = 0
-
+    var x = m
+    var y = n
+    var result:Int = 0
     do{
-        resultado = m%n
-        m=n
-        n=resultado
-    }while(resultado!=0)
-
-    resultado = (x*y)/m
-    return resultado
+        result = x%y
+        x=y
+        y=result
+    }while(result!=0)
+    result = (m*n)/x
+    return result
 }
 
 /**
@@ -131,10 +127,8 @@ fun lcm(m: Int, n: Int): Int{
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int{
-    val n:Int = n
     var resto:Int = 5
     var i:Int=1
-
     if(n==1){
         i=1
     }
@@ -153,10 +147,8 @@ fun minDivisor(n: Int): Int{
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int{
-    val n:Int = n
     var resto:Int = 5
     var i:Int=n
-
     if(n==1){
         i=1
     }
@@ -204,7 +196,6 @@ fun isCoPrime(m: Int, n: Int): Boolean{
     if(cont==1){
         result = true
     }
-
     return result
 }
 
@@ -281,10 +272,10 @@ fun cos(x: Double, eps: Double): Double = TODO()
 fun revert(n: Int): Int{
     var x:Int = n
     var cont:Int = 0
-    var resultado:Int=0
-    var variav:Int=n
+    var result:Int=0
+    var variable:Int=n
     if(n==0){
-        resultado=0
+        result=0
     }
     else{
         while(x>0){
@@ -295,8 +286,8 @@ fun revert(n: Int): Int{
         x=0
         arra[0] = n%10
         while(x<cont){
-            arra[x] = variav%10
-            variav/=10
+            arra[x] = variable%10
+            variable/=10
 
             x++
         }
@@ -310,11 +301,11 @@ fun revert(n: Int): Int{
 
         x=0
         while(x<cont){
-            resultado += arra[x]
+            result += arra[x]
             x++
         }
     }
-    return resultado
+    return result
 }
 
 /**
@@ -374,9 +365,6 @@ fun hasDifferentDigits(n: Int): Boolean{
     var x:Int=0
     var variav:Int = n
     var cont:Int=0
-
-
-
     while(x<tamanho){
         vetor[x] = variav%10
         variav/=10
@@ -392,14 +380,12 @@ fun hasDifferentDigits(n: Int): Boolean{
     else if(n>99){
         x= 0
         while(x<tamanho-2){
-
             if(vetor[x]!=vetor[x+1]){
                 //result += vetor[x]
                 cont++
             }
             x++
         }
-
         if(cont>0){
             result = true
         }
@@ -409,8 +395,6 @@ fun hasDifferentDigits(n: Int): Boolean{
             result = true
         }
     }
-
-
     return result
 }
 
@@ -433,7 +417,6 @@ fun squareSequenceDigit(n: Int): Int{
         }
     val result = IntArray(n*10)
     var index = 0
-
     val newLength = result.size
     while (index < newLength) {
         val numberRaw = resposta.get(index)
@@ -441,7 +424,6 @@ fun squareSequenceDigit(n: Int): Int{
         result[index] = parsedNumber
         ++index
     }
-
     return result[n-1]
 }
 
@@ -454,30 +436,27 @@ fun squareSequenceDigit(n: Int): Int{
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
 fun fibSequenceDigit(n: Int): Int{
-    var resposta:String=""
+    var arr:String=""
     var y:Int=0
     var z:Int=1
     var proximo:Int=0
     var i:Int= 2
-    resposta+= 1
+    arr+= 1
     while(i<10000){
         proximo=y+z
         y=z
         z=proximo
-        resposta+= proximo
-        //resposta+= ","
+        arr+= proximo
         i++
     }
     val result = IntArray(n)
     var index = 0
-
     val newLength = result.size
     while (index < newLength) {
-        val numberRaw = resposta.get(index)
+        val numberRaw = arr.get(index)
         val parsedNumber = Integer.parseInt((numberRaw).toString())
         result[index] = parsedNumber
         ++index
     }
-
     return result[n-1]
 }
