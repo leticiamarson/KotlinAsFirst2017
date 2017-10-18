@@ -182,7 +182,7 @@ fun isCoPrime(m: Int, n: Int): Boolean{
             i--
         }
     }
-    else if(n==m){
+    else if(n==1 && m==1){
         cont=1
     }
     else{
