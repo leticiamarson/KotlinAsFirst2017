@@ -35,46 +35,47 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  */
 fun ageDescription(age: Int): String{
     var age:Int = age
-    var resposta:String ="deu merda"
-    if(age<100){
-        if(age==1 || (age%10)==1){
-            resposta = "$age год"
+    var message:String ="something wrong happened!"
+    if(age>0 && age<100){
+        if(age==1){
+            message = "$age год"
         }
         else if(age>1 && age<=4){
-            resposta = "$age года"
+            message = "$age года"
         }
-        else if(age>12){
-            if((age%10)>1 && (age%10)<=4){
-                resposta = "$age года"
+        else if(age>=11 && age<20) {
+            message = "$age лет"
+        }
+        else{
+            if((age%10)==1){
+                message = "$age год"
             }
-            else resposta = "$age лет"
+            else if(age>1 && age<=4){
+                message = "$age года"
+            }
+            else message = "$age лет"
         }
-        else resposta = "$age лет"
     }
-    else{
-        age = age-100
-        if(age==1 || (age%10)==1){
+    else if(age<200){
+        age=age-100
+        if((age%10)==1 && age<10){
             age=age+100
-            resposta = "$age лет"
+            message = "$age год"
         }
-        else if(age>1 && age<=4){
+        else if(age>=11 && age<20) {
             age=age+100
-            resposta = "$age года"
+            message = "$age лет"
         }
-        else if(age>12){
-            if((age%10)>1 && (age%10)<=4){
-                age=age+100
-                resposta = "$age года"
-            }
-            else{
-                age=age+100
-                resposta = "$age лет"
-            }
+        else if(age%10>1 && age%10<=4){
+            age=age+100
+            message = "$age года"
         }
-        else resposta = "$age лет"
+        else{
+            age=age+100
+            message = "$age лет"
+        }
     }
-
-    return resposta
+    return message
 }
 
 /**
@@ -87,23 +88,12 @@ fun ageDescription(age: Int): String{
 fun timeForHalfWay(t1: Double, v1: Double,
                    t2: Double, v2: Double,
                    t3: Double, v3: Double): Double{
-    val t1 = t1
-    val t2 = t2
-    val t3= t3
-    var v1 = v1
-    var v2 = v2
-    var v3 =v3
     var dt:Double =0.0
-
     var s1 = v1*t1
     var s2 = v2*t2
     var s3 = v3*t3
     var ds = (s1+s2+s3)/2
-
-    //dt= "$s1 + $s2 + $s3 = $ds"
-
     if(ds<= s1){
-
         dt = ds / v1
     }
     else if(ds<=(s1+s2)) {
@@ -112,7 +102,6 @@ fun timeForHalfWay(t1: Double, v1: Double,
     else{
         dt = (t2+t1) +((ds-(s1+s2))/v3)
     }
-
     return dt
 }
 
@@ -128,28 +117,20 @@ fun timeForHalfWay(t1: Double, v1: Double,
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int{
-    val kx:Int = kingX
-    val ky:Int = kingY
-    val rx1:Int = rookX1
-    val ry1:Int = rookY1
-    val rx2:Int = rookX2
-    val ry2:Int = rookY2
     var i:Int = 5
-
-    if(kx == rx1 || ky == ry1){
+    if(kingX == rookX1 || kingY == rookY1){
         i=1
-        if(kx == rx2 || ky == ry2) {
+        if(kingX == rookX2 || kingY == rookY2) {
             i=3
         }
     }
-    else if(kx == rx2 || ky == ry2){
+    else if(kingX == rookX2 || kingY == rookY2){
         i=2
-        if(kx == rx1 || ky == ry1) {
+        if(kingX == rookX1 || kingY == rookY1) {
             i=3
         }
     }
     else i=0
-
     return i
 }
 
@@ -166,92 +147,81 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int{
-    val kx:Int = kingX
-    val ky:Int = kingY
-    val rx:Int = rookX //primeira torre
-    val ry:Int = rookY //segunda torre
-    val bsx:Int = bishopX
-    val bsy:Int = bishopY
     var i:Int = 0
     var x:Int = 1
     var y:Int = 1
 
-    if(kx == rx || ky == ry){
+    if(kingX == rookX || kingY == rookY){
         i=1
-        x=bsx
-        y=bsy
+        x=bishopX
+        y=bishopY
         while(x<=8 && y<=8){
-            if(x==kx && y==ky){
+            if(x==kingX && y==kingY){
                 i=3
             }
             y++
             x++
         }
-
-        x=bsx
-        y=bsy
+        x=bishopX
+        y=bishopY
         while(x<=8 && y>=1){
-            if(x==kx && y==ky){
+            if(x==kingX && y==kingY){
                 i=3
             }
             y--
             x++
         }
-
-        x=bsx
-        y=bsy
+        x=bishopX
+        y=bishopY
         while(x>=1 && y>=1){
-            if(x==kx && y==ky){
+            if(x==kingX && y==kingY){
                 i=3
             }
             y--
             x--
         }
-        x=bsx
-        y=bsy
+        x=bishopX
+        y=bishopY
         while(x>=1 && y<=8){
-            if(x==kx && y==ky){
+            if(x==kingX && y==kingY){
                 i=3
             }
             y++
             x--
         }
     }
-
     else if(i!=3 || i!=1) {
-        x=bsx
-        y=bsy
+        x=bishopX
+        y=bishopY
         while(x<=8 && y<=8){
-            if(x==kx && y==ky){
+            if(x==kingX && y==kingY){
                 i=2
             }
             y++
             x++
         }
-
-        x=bsx
-        y=bsy
+        x=bishopX
+        y=bishopY
         while(x<=8 && y>=1){
-            if(x==kx && y==ky){
+            if(x==kingX && y==kingY){
                 i=2
             }
             y--
             x++
         }
-
-        x=bsx
-        y=bsy
+        x=bishopX
+        y=bishopY
         while(x>=1 && y>=1){
-            if(x==kx && y==ky){
+            if(x==kingX && y==kingY){
                 i=2
             }
             y--
             x--
         }
-        x=bsx
-        y=bsy
+        x=bishopX
+        y=bishopY
         while(x>=1 && y<=8){
-            if(x==kx && y==ky){
+            if(x==kingX && y==kingY){
                 i=2
             }
             y++
@@ -259,7 +229,6 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
         }
     }
     else i=0
-
     return i
 }
 
@@ -276,44 +245,40 @@ fun triangleKind(a: Double, b: Double, c: Double): Int{
     var b:Double = b
     var c:Double = c
     var x:Double =0.0
-    var resposta:Int = -1
-
+    var answer:Int = -1
     if(c>b){
         x=c
         c=b
         b=x
         x=0.0
     }
-
     if(b>a){
         x=b
         b=a
         a=x
         x=0.0
     }
-
     if(c>a){
         x=c
         c=a
         a=x
         x=0.0
     }
-
     if(((b-c)<a && a<(b+c)) || ((a-c)<b && b<(a+c)) || ((a-b)<c && c<(a+b))){
         var i:Double = (b*b)+(c*c)
         var n:Double = (a*a)
         if(n==i){
-            resposta = 1
+            answer = 1
         }
         if(n<i){
-            resposta = 0
+            answer = 0
         }
         if(n>i){
-            resposta = 2
+            answer = 2
         }
     }
-    else resposta = -1
-    return resposta
+    else answer = -1
+    return answer
 }
 
 /**
@@ -325,10 +290,6 @@ fun triangleKind(a: Double, b: Double, c: Double): Int{
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int{
-    val a = a
-    val b = b
-    val c = c
-    val d = d
     var i:Int =0
 
     if(c==a){
