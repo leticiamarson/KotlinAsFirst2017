@@ -18,9 +18,7 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
 fun isNumberHappy(number: Int): Boolean{
-    var number:Int = number
     var n = IntArray(4)
-
     n[3] = number%10
     n[2] = ((number%100) - n[3])/10
     n[1] = ((number%1000) - n[2])/100
@@ -38,25 +36,20 @@ fun isNumberHappy(number: Int): Boolean{
  * Считать, что ферзи не могут загораживать друг друга.
  */
 fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean{
-    val qx1 = x1
-    val qy1 = y1
-    val qx2 = x2
-    val qy2 = y2
     var i:Boolean = false
     var t:Int = 0
     var x:Int=0
     var y:Int=0
 
-    if(qx1 == qx2 || qy1 == qy2){
+    if(x1 == x2 || y1 == y2){
         i= true
         t=1
-
     }
     if(i==false){
-        x=qx1
-        y=qy1
+        x=x1
+        y=y1
         while(x<=8 && y<=8){
-            if(x==qx2 && y==qy2){
+            if(x==x2 && y==y2){
                 i=true
                 t=2
             }
@@ -64,10 +57,10 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean{
             x++
         }
         if(i==false){
-            x=qx1
-            y=qy1
+            x=x1
+            y=y1
             while(x<=8 && y>=1){
-                if(x==qx2 && y==qy2){
+                if(x==x2 && y==y2){
                     i=true
                     t=4
                 }
@@ -75,10 +68,10 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean{
                 x++
             }
             if(i==false){
-                x=qx1
-                y=qy1
+                x=x1
+                y=y1
                 while(x>=1 && y>=1){
-                    if(x==qx2 && y==qy2){
+                    if(x==x2 && y==y2){
                         i=true
                         t=6
                     }
@@ -86,10 +79,10 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean{
                     x--
                 }
                 if(i==false){
-                    x=qx1
-                    y=qy1
+                    x=x1
+                    y=y1
                     while(x>=1 && y<=8){
-                        if(x==qx2 && y==qy2){
+                        if(x==x2 && y==y2){
                             i=true
                             t=8
                         }
@@ -100,7 +93,6 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean{
             }
         }
     }
-
     return i
 }
 
@@ -113,49 +105,42 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean{
  */
 fun circleInside(x1: Double, y1: Double, r1: Double,
                  x2: Double, y2: Double, r2: Double): Boolean{
-    val x1:Double = x1
-    val y1:Double = y1
-    val r1:Double = r1
-    val x2:Double = x2
-    val y2:Double=y2
-    val r2:Double=r2
-    var resp:Boolean = false
+    var answer:Boolean = false
 
     if(x2>x1){
         if((x2+r2)<(x1+r1) && (x2-r2)>x1){
             if(y2>y1){
                 if((y2+r2)<(y1+r1) && (y2-r2)>y1){
-                    resp=true
+                    answer=true
                 }
             }
             else{
                 if((y2+r2)<(y1) && (y2-r2)>(y1-r1)){
-                    resp=true
+                    answer=true
                 }
             }
         }
     }
     else if(x2==x1 || y2==y1){
         if(r1<r2 || r1==r2){
-            resp = true
+            answer = true
         }
     }
     else{
         if((x2+r2)<(x1) && (x2-r2)>(x1-r1)){
             if(y2>y1){
                 if((y2+r2)<(y1+r1) && (y2-r2)>y1){
-                    resp=true
+                    answer=true
                 }
             }
             else{
                 if((y2+r2)<(y1) && (y2-r2)>(y1-r1)){
-                    resp=true
+                    answer=true
                 }
             }
         }
     }
-
-    return resp
+    return answer
 }
 
 /**
@@ -171,8 +156,6 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean{
     var a:Int = a
     var b:Int = b
     var c:Int = c
-    val r:Int = r
-    val s:Int = s
     var x:Int = 0
 
     if(c>a){
@@ -193,8 +176,6 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean{
         a=x
         x=0
     }
-
-
     var result:Boolean = false
     if(r>s){
         if(r>=b){
@@ -210,6 +191,5 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean{
             }
         }
     }
-
     return result
 }
