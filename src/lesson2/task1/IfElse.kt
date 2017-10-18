@@ -58,7 +58,7 @@ fun ageDescription(age: Int): String{
     }
     else if(age<200){
         age=age-100
-        if((age%10)==1 && age<10){
+        if((age%10)==1 && age!=11){
             age=age+100
             message = "$age год"
         }
