@@ -245,7 +245,7 @@ fun fatorial(x:Int):Double{
     }
 }
 */
-fun sin(x: Double, eps: Double): Double{
+fun sin(x: Double, eps: Double): Double= TODO()
   /*  var result:Double = x
     var i:Int = 1
     var radiano:Double = 0.0
@@ -261,7 +261,7 @@ fun sin(x: Double, eps: Double): Double{
 
     return result
     */
-}
+
 
 /**
  * Средняя
