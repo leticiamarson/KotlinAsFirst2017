@@ -182,6 +182,9 @@ fun isCoPrime(m: Int, n: Int): Boolean{
             i--
         }
     }
+    else if(n==m){
+        cont=1
+    }
     else{
         var i:Int= m-1
         while(i>0){
@@ -216,6 +219,9 @@ fun squareBetweenExists(m: Int, n: Int): Boolean{
                 result = true
         }
     }
+    if(n==0 && m==0){
+        result = true
+    }
     if(n== Int.MAX_VALUE){
         result = false
     }
@@ -229,6 +235,7 @@ fun squareBetweenExists(m: Int, n: Int): Boolean{
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
+/*
 fun fatorial(x:Int):Double{
     if(x>1){
         return x * factorial(x-1)
@@ -237,8 +244,9 @@ fun fatorial(x:Int):Double{
         return 1.0
     }
 }
+*/
 fun sin(x: Double, eps: Double): Double{
-    var result:Double = x
+  /*  var result:Double = x
     var i:Int = 1
     var radiano:Double = 0.0
     var oto:Double = 0.0
@@ -252,6 +260,7 @@ fun sin(x: Double, eps: Double): Double{
     }
 
     return result
+    */
 }
 
 /**
