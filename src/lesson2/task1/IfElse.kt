@@ -2,6 +2,7 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
+import lesson1.task1.sqr
 
 /**
  * Пример
@@ -34,48 +35,15 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String{
-    var age:Int = age
-    var message:String ="something wrong happened!"
-    if(age>0 && age<100){
-        if(age==1){
-            message = "$age год"
+        if(age%10==1 && age%100!=11){
+            return "$age год"
         }
-        else if(age>1 && age<=4){
-            message = "$age года"
-        }
-        else if(age>=11 && age<20) {
-            message = "$age лет"
+        else if(age>=11 && age<20 || age%100>=11 && age%100<20 || age%10>=5 && age%10<=9 || age%10==0) {
+            return "$age лет"
         }
         else{
-            if((age%10)==1){
-                message = "$age год"
-            }
-            else if(age%10>1 && age%10<=4){
-                message = "$age года"
-            }
-            else message = "$age лет"
+            return "$age года"
         }
-    }
-    else if(age<200){
-        age=age-100
-        if((age%10)==1 && age!=11){
-            age=age+100
-            message = "$age год"
-        }
-        else if(age>=11 && age<20) {
-            age=age+100
-            message = "$age лет"
-        }
-        else if(age%10>1 && age%10<=4){
-            age=age+100
-            message = "$age года"
-        }
-        else{
-            age=age+100
-            message = "$age лет"
-        }
-    }
-    return message
 }
 
 /**
@@ -117,20 +85,17 @@ fun timeForHalfWay(t1: Double, v1: Double,
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int{
-    var i:Int = 5
+    var i:Int = 0
     if(kingX == rookX1 || kingY == rookY1){
         i=1
-        if(kingX == rookX2 || kingY == rookY2) {
-            i=3
-        }
     }
     else if(kingX == rookX2 || kingY == rookY2){
         i=2
-        if(kingX == rookX1 || kingY == rookY1) {
-            i=3
-        }
     }
     else i=0
+    if((i==2 && kingX == rookX1) || (i==2 && kingY == rookY1) || (i==1 && kingX == rookX2) || (i==1 && kingY == rookY2)){
+        i=3
+    }
     return i
 }
 
@@ -148,87 +113,17 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int{
     var i:Int = 0
-    var x:Int = 1
-    var y:Int = 1
 
     if(kingX == rookX || kingY == rookY){
         i=1
-        x=bishopX
-        y=bishopY
-        while(x<=8 && y<=8){
-            if(x==kingX && y==kingY){
-                i=3
-            }
-            y++
-            x++
-        }
-        x=bishopX
-        y=bishopY
-        while(x<=8 && y>=1){
-            if(x==kingX && y==kingY){
-                i=3
-            }
-            y--
-            x++
-        }
-        x=bishopX
-        y=bishopY
-        while(x>=1 && y>=1){
-            if(x==kingX && y==kingY){
-                i=3
-            }
-            y--
-            x--
-        }
-        x=bishopX
-        y=bishopY
-        while(x>=1 && y<=8){
-            if(x==kingX && y==kingY){
-                i=3
-            }
-            y++
-            x--
-        }
     }
-    else if(i!=3 || i!=1) {
-        x=bishopX
-        y=bishopY
-        while(x<=8 && y<=8){
-            if(x==kingX && y==kingY){
-                i=2
-            }
-            y++
-            x++
-        }
-        x=bishopX
-        y=bishopY
-        while(x<=8 && y>=1){
-            if(x==kingX && y==kingY){
-                i=2
-            }
-            y--
-            x++
-        }
-        x=bishopX
-        y=bishopY
-        while(x>=1 && y>=1){
-            if(x==kingX && y==kingY){
-                i=2
-            }
-            y--
-            x--
-        }
-        x=bishopX
-        y=bishopY
-        while(x>=1 && y<=8){
-            if(x==kingX && y==kingY){
-                i=2
-            }
-            y++
-            x--
-        }
+    else if(sqr((kingX-bishopX).toDouble()) == sqr((kingY-bishopY).toDouble())){
+        i=2
     }
     else i=0
+    if((i==2 && (kingX == rookX || kingY == rookY)) || (i==1 && (sqr((kingX-bishopX).toDouble())== sqr((kingY-bishopY).toDouble())))) {
+        i=3
+    }
     return i
 }
 
@@ -241,44 +136,25 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int{
-    var a:Double = a
-    var b:Double = b
-    var c:Double = c
-    var x:Double =0.0
-    var answer:Int = -1
-    if(c>b){
-        x=c
-        c=b
-        b=x
-        x=0.0
-    }
-    if(b>a){
-        x=b
-        b=a
-        a=x
-        x=0.0
-    }
-    if(c>a){
-        x=c
-        c=a
-        a=x
-        x=0.0
-    }
-    if(((b-c)<a && a<(b+c)) || ((a-c)<b && b<(a+c)) || ((a-b)<c && c<(a+b))){
-        var i:Double = (b*b)+(c*c)
-        var n:Double = (a*a)
-        if(n==i){
-            answer = 1
-        }
-        if(n<i){
-            answer = 0
-        }
-        if(n>i){
-            answer = 2
+    var aa:Double = maxOf(a,b,c)
+    var cc:Double = minOf(a,b,c)
+    var bb:Double = 0.0
+    if(a<aa && a>cc)
+        bb=a
+    else if(b<aa && b>cc)
+        bb=b
+    else
+        bb=c
+
+    if(((bb-cc)<aa && aa<(bb+cc)) || ((aa-cc)<bb && bb<(aa+cc)) || ((aa-bb)<cc && cc<(aa+bb))){
+        var i:Double = sqr(bb) + sqr(cc)
+        when{
+            sqr(aa)==i -> return 1
+            sqr(aa)<i  -> return 0
+            else -> return 2
         }
     }
-    else answer = -1
-    return answer
+    else return -1
 }
 
 /**
@@ -290,26 +166,13 @@ fun triangleKind(a: Double, b: Double, c: Double): Int{
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int{
-    var i:Int =0
-
-    if(c==a){
-        if(d<=b) i= d-c
-        else i=b-c
+    when{
+        c>b || a>d -> return -1
+        a<c && b>d -> return (d-c)
+        a<c && b<d -> return (b-c)
+        a>c && b>d -> return (d-a)
+        a>c && b<d -> return (b-a)
+        a==c && b==d -> return (d-c)
+        else -> return 0
     }
-    else if(c>a){
-        if(d<=b) i= d-c
-        else i= b-c
-    }
-    else if(c<a){
-        if(d>a){
-            if(d<b) i=d-a
-            else i=b-a
-        }
-        else if(d==a) i=0
-        else i=-1
-    }
-    else if(b<c) i=-1
-    else if(b==c) i=0
-    else i=2
-    return i
 }
