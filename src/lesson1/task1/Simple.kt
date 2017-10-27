@@ -78,7 +78,7 @@ fun angleInRadian(grad: Int, min: Int, sec: Int): Double{
     val g:Double = ((grad.toDouble()*Math.PI)/180)
     val m:Double = ((min.toDouble()*Math.PI)/180)
     val s:Double = ((sec.toDouble()*Math.PI)/180)/60
-    return (g+((m - m.toInt())/60)+((s - s.toInt())/60))
+    return (g+((m)/60)+((s)/60))
 }
 
 /**
@@ -137,16 +137,4 @@ fun accountInThreeYears(initial: Int, percent: Int): Double{
  *Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
 fun numberRevert(number: Int): Int
-    //possibility 1 (how i think you would prefer)
     = ((number%10)*100)+(number%100)-(number%10)+(((number%1000) - (((number%100)-number%10)+(number%10)))/100)
-    /* possibility 2 (how i did in the first time)
-    {
-    var ar = IntArray(3)
-    ar[0] = number%10
-    ar[1] = (number%100) - ar[0]
-    ar[2] = (number%1000) - (ar[1]+ar[0])
-    var answer:Int = (ar[0]*100) + ar[1] + (ar[2]/100)
-    return answer
-    }
-    */
-
