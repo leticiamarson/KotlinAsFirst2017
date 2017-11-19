@@ -446,7 +446,7 @@ fun convertToString(n: Int, base: Int): String{
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun n(digits: List<Int>, base: Int): Int{
+fun decimal(digits: List<Int>, base: Int): Int{
     var result:Double=0.0
     var i:Int=digits.size-1
     var j:Int=0
