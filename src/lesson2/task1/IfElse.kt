@@ -139,6 +139,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int{
     var aa:Double = maxOf(a,b,c)
     var cc:Double = minOf(a,b,c)
     var bb:Double = 0.0
+
     if(a<aa && a>cc)
         bb=a
     else if(b<aa && b>cc)
@@ -146,15 +147,15 @@ fun triangleKind(a: Double, b: Double, c: Double): Int{
     else
         bb=c
 
-    if(((bb-cc)<aa && aa<(bb+cc)) || ((aa-cc)<bb && bb<(aa+cc)) || ((aa-bb)<cc && cc<(aa+bb))){
-        var i:Double = sqr(bb) + sqr(cc)
-        when{
-            sqr(aa)==i -> return 1
-            sqr(aa)<i  -> return 0
-            else -> return 2
-        }
+    if(aa<=0 || bb<=0 || cc<=0) return -1
+    else if((a + b <= c) || (a + c <= b) || (b + c <= a))return -1
+    else{
+    when{
+        sqr(bb)+sqr(cc) == sqr(aa) -> return 1
+        sqr(bb)+sqr(cc)>sqr(aa) -> return 0
+        else -> return 2
     }
-    else return -1
+    }
 }
 
 /**
@@ -168,11 +169,10 @@ fun triangleKind(a: Double, b: Double, c: Double): Int{
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int{
     when{
         c>b || a>d -> return -1
-        a<c && b>=d -> return (d-c)
+        a<=c && b>=d -> return (d-c)
         a<=c && b<=d -> return (b-c)
-        a>c && b>=d -> return (d-a)
+        a>=c && b>=d -> return (d-a)
         a>=c && b<=d -> return (b-a)
-        //a==c && b==d -> return (d-c)
         else -> return 0
     }
 }
