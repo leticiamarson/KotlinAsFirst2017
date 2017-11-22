@@ -35,15 +35,14 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String{
-        if(age%10==1 && age%100!=11){
-            return "$age год"
-        }
-        else if(age>=11 && age<20 || age%100>=11 && age%100<20 || age%10>=5 && age%10<=9 || age%10==0) {
-            return "$age лет"
-        }
-        else{
-            return "$age года"
-        }
+        when{
+        age%10==1 && age%100!=11 -> return "$age год"
+        age>=11 && age<20 -> return "$age лет"
+        age%100>=11 && age%100<20 -> return "$age лет"
+        age%10>=5 && age%10<=9 -> return "$age лет"
+        age%10==0 -> return "$age лет"
+        else -> return "$age года"
+    }
 }
 
 /**
@@ -85,18 +84,26 @@ fun timeForHalfWay(t1: Double, v1: Double,
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int{
-    var i:Int = 0
-    if(kingX == rookX1 || kingY == rookY1){
-        i=1
+    var rook1x: Boolean = kingX == rookX1
+    var rook1y: Boolean = kingY == rookY1
+    var rook2x: Boolean = kingX == rookX2
+    var rook2y: Boolean = kingY == rookY2
+    var rook1:Boolean = false
+    var rook2:Boolean = false
+
+    if(rook1x==true || rook1y==true){
+        rook1=true
     }
-    else if(kingX == rookX2 || kingY == rookY2){
-        i=2
+    else if(rook2x==true || rook2y==true){
+        rook2=true
     }
-    else i=0
-    if((i==2 && kingX == rookX1) || (i==2 && kingY == rookY1) || (i==1 && kingX == rookX2) || (i==1 && kingY == rookY2)){
-        i=3
+    when{
+        rook2==true && rook1x==true || rook2==true && rook1y==true -> return 3
+        rook1==true && rook2y==true || rook1==true && rook2x==true -> return 3
+        rook1==true-> return 1
+        rook2==true-> return 2
+        else -> return 0
     }
-    return i
 }
 
 /**
