@@ -146,22 +146,25 @@ fun triangleKind(a: Double, b: Double, c: Double): Int{
     var aa:Double = maxOf(a,b,c)
     var cc:Double = minOf(a,b,c)
     var bb:Double = 0.0
-
-    if(a<aa && a>cc)
+    if(b==a &&b>cc){
+        bb=a
+    }
+    else if(b==c && b<aa){
+        bb=cc
+    }
+    else if(a<aa && a>cc)
         bb=a
     else if(b<aa && b>cc)
         bb=b
     else
         bb=c
 
-    if(aa<=0 || bb<=0 || cc<=0) return -1
-    else if((a + b <= c) || (a + c <= b) || (b + c <= a))return -1
-    else{
     when{
+        aa<=0 || bb<=0 || cc<=0 -> return -1
+        (a + b <= c) || (a + c <= b) || (b + c <= a) -> return -1
         sqr(bb)+sqr(cc) == sqr(aa) -> return 1
-        sqr(bb)+sqr(cc)>sqr(aa) -> return 0
-        else -> return 2
-    }
+        sqr(bb)+sqr(cc)<sqr(aa) -> return 2
+        else -> return 0
     }
 }
 
