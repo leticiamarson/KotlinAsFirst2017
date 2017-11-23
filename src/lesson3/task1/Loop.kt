@@ -200,30 +200,7 @@ fun squareBetweenExists(m: Int, n: Int): Boolean{
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 
-fun sin(x: Double, eps: Double): Double{
-    var result:Double = 0.0
-    var i:Int = 1
-    var radian:Double = 0.0
-    var oto:Double = 1.0
-//arrumar a precisao do seno. correspondente dele menor numero possivel
-    //radian = (x/180.0)* Math.PI
-    if(x>(Math.PI/2) && x<Math.PI){
-        radian=(Math.PI-x) //do segundo pro primeiro
-    }
-    else if(x>Math.PI && x<((3*Math.PI)/2)){
-        radian=-1*(x-Math.PI) //do terceiro quadrante pro primeiro
-    }
-    else if(x>((3*Math.PI)/2) && x<(2*Math.PI)){
-        radian=-1*((2*Math.PI)-x) //do quarto quadrante pro primeiro
-    }
-    do{
-        result += oto*(pow(x,i.toDouble())/ factorial(i))
-        i+=2
-        oto *= -1
-    }while((pow(x,i.toDouble())/factorial(i))>eps)
-
-    return result
-}
+fun sin(x: Double, eps: Double): Double=TODO()
 
 
 /**
