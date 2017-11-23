@@ -162,18 +162,19 @@ fun maxDivisor(n: Int): Int{
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean{
-    var cont:Int=0
-    var minim:Int=minOf(m,n)
-    var maxim:Int=maxOf(m,n)
-    var i:Int= maxim-1
-    while(i>0){
-        if(minim%i==0 && maxim%i==0) cont++
-        i--
+    var temp: Int
+    var m:Int= m
+    var n:Int=n
+
+    while (true) {
+        temp = m % n
+        if (temp == 0){
+            if(n==1) return true
+            else return false
+        }
+        m = n
+        n = temp
     }
-    if(cont==1){
-        return true
-    }
-    else return false
 }
 
 /**
