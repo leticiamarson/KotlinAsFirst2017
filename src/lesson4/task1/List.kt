@@ -575,148 +575,213 @@ fun roman(n: Int): String{
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String{
-    var cont:Int=0
-    var cont0:Int=0
-    var num:Int=n
-    var listnum:MutableList<String> = mutableListOf()
-    var result:String=""
+    var string:String= n.toString().reversed()
+    val matrix =arrayOf(arrayOf("ноль", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять"),
+                        arrayOf("ноль", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят", "девяносто"),
+                        arrayOf("ноль", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот"),
+                        arrayOf("ноль", "тысяча", "две тысячи", "три тысячи", "четыре тысячи", "пять тысяч", "шесть тысяч", "семь тысяч", "восемь тысяч", "девять тысяч"),
+                        arrayOf("ноль", "десять тысяч", "двадцать тысяч", "тридцать тысяч", "сорок тысяч", "пятьдесят тысяч", "шестьдесят тысяч", "семьдесят тысяч", "восемьдесят тысяч", "девяносто тысяч"),
+                        arrayOf("ноль", "сто тысяч", "двести тысяч", "триста тысяч", "четыреста тысяч", "пятьсот тысяч", "шестьсот тысяч", "семьсот тысяч", "восемьсот тысяч", "девятьсот тысяч"))
+    val otharray =arrayOf(arrayOf("одинадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать"),
+                          arrayOf("одинадцать тысяч", "двенадцать тысяч", "тринадцать тысяч", "четырнадцать тысяч", "пятнадцать тысяч", "шестнадцать тысяч", "семнадцать тысяч", "восемнадцать тысяч", "девятнадцать тысяч"))
+    var result:MutableList<String> = mutableListOf()
+    var resp:String = ""
+    var i:Int=0
+    var cont0:Int=1
 
-    while(num>0){
-        if(cont==0){
-            if(num%100>9 && num%100<20){
-                when(num%100){
-                    10 -> listnum.add("десять")
-                    11 -> listnum.add("одиннадцать")
-                    12 -> listnum.add("двенадцать")
-                    13 -> listnum.add("тринадцать")
-                    14 -> listnum.add("четырнадцать")
-                    15 -> listnum.add("пятнадцать")
-                    16 -> listnum.add("шестнадцать")
-                    17 -> listnum.add("семнадцать")
-                    18 -> listnum.add("восемнадцать")
-                    19 -> listnum.add("девятнадцать")
+        if(string.length==1 && string[0]=='0')return "ноль"
+    while(i<string.length){
+        if(i==0) {
+            if (string.length>1){
+            if (string[1] == '1') {
+                when (string[i]) {
+                    '0' -> result.add(matrix[i + 1][1])
+                    '1' -> result.add(otharray[i][0])
+                    '2' -> result.add(otharray[i][1])
+                    '3' -> result.add(otharray[i][2])
+                    '4' -> result.add(otharray[i][3])
+                    '5' -> result.add(otharray[i][4])
+                    '6' -> result.add(otharray[i][5])
+                    '7' -> result.add(otharray[i][6])
+                    '8' -> result.add(otharray[i][7])
+                    '9' -> result.add(otharray[i][8])
                 }
-                if(num%10==0) cont0=cont0+2
-                num/=100
+                cont0++
+                i++
             }
             else{
-            when(num%10){
-                1 -> listnum.add("один")
-                2 -> listnum.add("два")
-                3 -> listnum.add("три")
-                4 -> listnum.add("четыре")
-                5 -> listnum.add("пять")
-                6 -> listnum.add("шесть")
-                7 -> listnum.add("семь")
-                8 -> listnum.add("восемь")
-                9 -> listnum.add("девять")
-            }
-                if(num%10==0) cont0++
-                num/=10
-            }
-        }
-        else if(cont==1){
-            when(num%10){
-                2 -> listnum.add("двадцать")
-                3 -> listnum.add("тридцать")
-                4 -> listnum.add("сорок")
-                5 -> listnum.add("пятьдесят")
-                6 -> listnum.add("шестьдесят")
-                7 -> listnum.add("семьдесят")
-                8 -> listnum.add("восемьдесят")
-                9 -> listnum.add("девяносто")
-            }
-            if(num%10==0) cont0++
-            num/=10
-        }
-        else if(cont==2){
-            when(num%10){
-                1 -> listnum.add("сто")
-                2 -> listnum.add("двести")
-                3 -> listnum.add("триста")
-                4 -> listnum.add("четыреста")
-                5 -> listnum.add("пятьсот")
-                6 -> listnum.add("шестьсот")
-                7 -> listnum.add("семьсот")
-                8 -> listnum.add("восемьсот")
-                9 -> listnum.add("девятьсот")
-            }
-            if(num%10==0) cont0++
-            num/=10
-        }
-        else if(cont==3){
-            if(num%100>9 && num%100<20){
-                when(num%100){
-                    10 -> listnum.add("десять тысяч")
-                    11 -> listnum.add("одиннадцать тысяч")
-                    12 -> listnum.add("двенадцать тысяч")
-                    13 -> listnum.add("тринадцать тысяч")
-                    14 -> listnum.add("четырнадцать тысяч")
-                    15 -> listnum.add("пятнадцать тысяч")
-                    16 -> listnum.add("шестнадцать тысяч")
-                    17 -> listnum.add("семнадцать тысяч")
-                    18 -> listnum.add("восемнадцать тысяч")
-                    19 -> listnum.add("девятнадцать тысяч")
+                when(string[i]){
+                    '0'-> cont0++
+                    '1'-> result.add(matrix[i][1])
+                    '2'-> result.add(matrix[i][2])
+                    '3'-> result.add(matrix[i][3])
+                    '4'-> result.add(matrix[i][4])
+                    '5'-> result.add(matrix[i][5])
+                    '6'-> result.add(matrix[i][6])
+                    '7'-> result.add(matrix[i][7])
+                    '8'-> result.add(matrix[i][8])
+                    '9'-> result.add(matrix[i][9])
                 }
-                if(num%10==0) cont0=cont0+2
-                num/=100
             }
-            else {
-                when (num % 10) {
-                    //0 -> listnum.add("тысяч")
-                    1 -> listnum.add("тысяча")
-                    2 -> listnum.add("две тысячи")
-                    3 -> listnum.add("три тысячи")
-                    4 -> listnum.add("четыре тысячи")
-                    5 -> listnum.add("пять тысяч")
-                    6 -> listnum.add("шесть тысяч")
-                    7 -> listnum.add("семь тысяч")
-                    8 -> listnum.add("восемь тысяч")
-                    9 -> listnum.add("девять тысяч")
+            }
+            else{
+                when(string[i]){
+                    '0'-> cont0++
+                    '1'-> result.add(matrix[i][1])
+                    '2'-> result.add(matrix[i][2])
+                    '3'-> result.add(matrix[i][3])
+                    '4'-> result.add(matrix[i][4])
+                    '5'-> result.add(matrix[i][5])
+                    '6'-> result.add(matrix[i][6])
+                    '7'-> result.add(matrix[i][7])
+                    '8'-> result.add(matrix[i][8])
+                    '9'-> result.add(matrix[i][9])
                 }
-                if(num%10==0) cont0++
-                num /= 10
             }
         }
-        else if(cont==4){
-            when(num%10){
-                1 -> listnum.add("сто")
-                2 -> listnum.add("двадцать")
-                3 -> listnum.add("тридцать")
-                4 -> listnum.add("сорок")
-                5 -> listnum.add("пятьдесят")
-                6 -> listnum.add("шестьдесят")
-                7 -> listnum.add("семьдесят")
-                8 -> listnum.add("восемьдесят")
-                9 -> listnum.add("девяносто")
+        if(i==1){
+            when(string[i]){
+                '0'-> cont0++
+                '2'-> result.add(matrix[i][2])
+                '3'-> result.add(matrix[i][3])
+                '4'-> result.add(matrix[i][4])
+                '5'-> result.add(matrix[i][5])
+                '6'-> result.add(matrix[i][6])
+                '7'-> result.add(matrix[i][7])
+                '8'-> result.add(matrix[i][8])
+                '9'-> result.add(matrix[i][9])
             }
-            if(num%10==0) cont0++
-            num/=10
         }
-        else{
-            when(num%10){
-                1 -> listnum.add("сто тысяча")
-                2 -> listnum.add("двести тысяч")
-                3 -> listnum.add("триста тысяч")
-                4 -> listnum.add("четыреста тысяч")
-                5 -> listnum.add("пятьсот тысяч")
-                6 -> listnum.add("шестьсот тысяч")
-                7 -> listnum.add("семьсот тысяч")
-                8 -> listnum.add("восемьсот тысяч")
-                9 -> listnum.add("девятьсот тысяч")
+        if(i==2){
+            when(string[i]){
+                '0'-> cont0++
+                '1'-> result.add(matrix[i][1])
+                '2'-> result.add(matrix[i][2])
+                '3'-> result.add(matrix[i][3])
+                '4'-> result.add(matrix[i][4])
+                '5'-> result.add(matrix[i][5])
+                '6'-> result.add(matrix[i][6])
+                '7'-> result.add(matrix[i][7])
+                '8'-> result.add(matrix[i][8])
+                '9'-> result.add(matrix[i][9])
             }
-            if(num%10==0) cont0++
-            num/=10
         }
-        cont++
+        if(i==3){
+            if(string.length>4){
+                if(string [4] == '1'){
+                when (string[i]) {
+                    '0' -> result.add(matrix[1][1])
+                    '0' -> cont0++
+                    '1' -> result.add(otharray[1][0])
+                    '2' -> result.add(otharray[1][1])
+                    '3' -> result.add(otharray[1][2])
+                    '4' -> result.add(otharray[1][3])
+                    '5' -> result.add(otharray[1][4])
+                    '6' -> result.add(otharray[1][5])
+                    '7' -> result.add(otharray[1][6])
+                    '8' -> result.add(otharray[1][7])
+                    '9' -> result.add(otharray[1][8])
+                }
+                cont0++
+                i++
+            }
+                else{
+                    when(string[i]){
+                        '0'-> cont0++
+                        '1'-> result.add(matrix[i][1])
+                        '2'-> result.add(matrix[i][2])
+                        '3'-> result.add(matrix[i][3])
+                        '4'-> result.add(matrix[i][4])
+                        '5'-> result.add(matrix[i][5])
+                        '6'-> result.add(matrix[i][6])
+                        '7'-> result.add(matrix[i][7])
+                        '8'-> result.add(matrix[i][8])
+                        '9'-> result.add(matrix[i][9])
+                    }
+                }
+        }
+            else{
+                when(string[i]){
+                    '0'-> cont0++
+                    '1'-> result.add(matrix[i][1])
+                    '2'-> result.add(matrix[i][2])
+                    '3'-> result.add(matrix[i][3])
+                    '4'-> result.add(matrix[i][4])
+                    '5'-> result.add(matrix[i][5])
+                    '6'-> result.add(matrix[i][6])
+                    '7'-> result.add(matrix[i][7])
+                    '8'-> result.add(matrix[i][8])
+                    '9'-> result.add(matrix[i][9])
+                }
+            }
+        }
+        if(i==4){
+            if(string[i-1]=='0'){
+                when(string[i]){
+                    '0'-> cont0++
+                    '2'-> result.add(matrix[i][2])
+                    '3'-> result.add(matrix[i][3])
+                    '4'-> result.add(matrix[i][4])
+                    '5'-> result.add(matrix[i][5])
+                    '6'-> result.add(matrix[i][6])
+                    '7'-> result.add(matrix[i][7])
+                    '8'-> result.add(matrix[i][8])
+                    '9'-> result.add(matrix[i][9])
+                }
+            }
+            else{
+                when(string[i]){
+                    '0'-> cont0++
+                    '2'-> result.add(matrix[1][2])
+                    '3'-> result.add(matrix[1][3])
+                    '4'-> result.add(matrix[1][4])
+                    '5'-> result.add(matrix[1][5])
+                    '6'-> result.add(matrix[1][6])
+                    '7'-> result.add(matrix[1][7])
+                    '8'-> result.add(matrix[1][8])
+                    '9'-> result.add(matrix[1][9])
+                }
+            }
+        }
+        if(i==5){
+            if(string[3]=='0' && string[4]=='0'){
+                when(string[i]){
+                    '0'-> cont0++
+                    '1'-> result.add(matrix[i][1])
+                    '2'-> result.add(matrix[i][2])
+                    '3'-> result.add(matrix[i][3])
+                    '4'-> result.add(matrix[i][4])
+                    '5'-> result.add(matrix[i][5])
+                    '6'-> result.add(matrix[i][6])
+                    '7'-> result.add(matrix[i][7])
+                    '8'-> result.add(matrix[i][8])
+                    '9'-> result.add(matrix[i][9])
+                }
+            }
+            else{
+                when(string[i]){
+                    '0'-> cont0++
+                    '1'-> result.add(matrix[2][1])
+                    '2'-> result.add(matrix[2][2])
+                    '3'-> result.add(matrix[2][3])
+                    '4'-> result.add(matrix[2][4])
+                    '5'-> result.add(matrix[2][5])
+                    '6'-> result.add(matrix[2][6])
+                    '7'-> result.add(matrix[2][7])
+                    '8'-> result.add(matrix[2][8])
+                    '9'-> result.add(matrix[2][9])
+                }
+            }
+        }
+
+        i++
     }
-    cont=cont-cont0-1
-    while(cont>=0){
-        result+=listnum[cont]
-        if(cont>0){
-            result+= " "
-        }
-        cont--
+    i=i-cont0
+    while(i>=0){
+        resp+=result[i]
+        if(i!=0) resp+=" "
+        i--
     }
-    return result
+
+    return resp
 }
