@@ -348,7 +348,7 @@ fun convert(n: Int, base: Int): List<Int>{
         do{
             resto.add(number%base)
             number = number/base
-        }while(number>base)
+        }while(number>=base)
         resto.add(number)
     }
     else resto.add(n)
@@ -367,7 +367,7 @@ fun convertToString(n: Int, base: Int): String{
     var stringlist:String =""
     var number:Int=n
     //if(number>base){
-    while(number>base){
+    while(number>=base){
             if((number%base)<10){
                 stringlist += (number%base).toString()
             }
@@ -494,6 +494,7 @@ fun roman(n: Int): String{
     var num:String = n.toString()
     var i:Int= 1
     var j:Int= num.toString().length-1
+    var contzero:Int=1
     var result:MutableList<String> = mutableListOf()
     var resultado:String=""
 
@@ -523,6 +524,7 @@ fun roman(n: Int): String{
                 '7'-> result.add("LXX")
                 '8'-> result.add("LXXX")
                 '9'-> result.add("XC")
+                '0' -> contzero++
             }
             j--
         }
@@ -537,6 +539,7 @@ fun roman(n: Int): String{
                 '7'-> result.add("DCC")
                 '8'-> result.add("DCCC")
                 '9'-> result.add("CM")
+                '0' -> contzero++
             }
             j--
         }
@@ -545,6 +548,28 @@ fun roman(n: Int): String{
                 '1'-> result.add("M")
                 '2'-> result.add("MM")
                 '3'-> result.add("MMM")
+                '4'-> result.add("MMMM")
+                '5'-> result.add("MMMMM")
+                '6'-> result.add("MMMMMM")
+                '7'-> result.add("MMMMMMM")
+                '8'-> result.add("MMMMMMMM")
+                '9'-> result.add("MMMMMMMMM")
+                '0' -> contzero++
+            }
+            j--
+        }
+        else if(i==5){
+            when(num[j]){
+                '1'-> result.add("MMMMMMMMMM")
+                '2'-> result.add("MMMMMMMMMMMMMMMMMMMM")
+                '3'-> result.add("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM")
+                '4'-> result.add("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM")
+                '5'-> result.add("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM")
+                '6'-> result.add("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM")
+                '7'-> result.add("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM")
+                '8'-> result.add("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM")
+                '9'-> result.add("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM")
+                '0' -> contzero++
             }
             j--
         }
@@ -558,7 +583,7 @@ fun roman(n: Int): String{
         resultado += result[0]
     }
     else{
-    i=num.toString().length-1
+    i=num.toString().length-contzero
     while(i>=0){
         resultado+=result[i]
         i--
