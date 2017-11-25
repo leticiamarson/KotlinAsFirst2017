@@ -510,6 +510,7 @@ fun roman(n: Int): String{
             '7'-> result.add("VII")
             '8'-> result.add("VIII")
             '9'-> result.add("IX")
+            '0' -> contzero++
         }
             j--
         }
