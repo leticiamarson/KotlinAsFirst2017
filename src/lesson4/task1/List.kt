@@ -578,11 +578,11 @@ fun roman(n: Int): String{
 
     }
     if(num.toString().length==1){
-        resultado+="I"
+        resultado+=result[0]
     }
-    else if(n%10==0 || n%100==0 || n%1000==0) {
+    /*else if(n%10==0 || n%100==0 || n%1000==0) {
         resultado += result[0]
-    }
+    }*/
     else{
     i=num.toString().length-contzero
     while(i>=0){
