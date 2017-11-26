@@ -1,6 +1,9 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson5.task1
 
+import com.sun.xml.internal.fastinfoset.util.StringArray
+import java.util.*
+
 /**
  * Пример
  *
@@ -66,7 +69,69 @@ fun main(args: Array<String>) {
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011.
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String{
+    var stringlist:String =""
+    var month:String =""
+    var size:Int = str.length
+    var i:Int=0
+    var cont:Int=0
+    var j:Int=0
+
+    if(size<10) return ""
+    while(i<size){
+        if(cont==1){
+            i++
+            while(str[i]!=' '){
+                month+=str[i]
+                i++
+            }
+            when(month){
+                "января" -> stringlist+="01."
+                "февраля" -> stringlist+="02."
+                "марта" -> stringlist+="03."
+                "апреля" -> stringlist+="04."
+                "мая" -> stringlist+="05."
+                "июня" -> stringlist+="06."
+                "июля" -> stringlist+="07."
+                "августа" -> stringlist+="08."
+                "сентября" -> stringlist+="09."
+                "октября" -> stringlist+="10."
+                "ноября" -> stringlist+="11."
+                "декабря" -> stringlist+="12."
+                else -> return ""
+            }
+            cont++
+        }
+        else if(cont==2){
+            i++
+            while(i<size){
+                stringlist+=str[i]
+                i++
+            }
+        }
+        else{
+            while(str[j]!=' '){
+                j++
+            }
+            if(j==1){
+                stringlist+='0'
+                while(str[i]!=' '){
+                    stringlist+=str[i]
+                    i++
+                }
+            }
+            else{
+                while(str[i]!=' '){
+                    stringlist+=str[i]
+                    i++
+                }
+            }
+            stringlist+='.'
+            cont++
+        }
+    }
+    return stringlist
+}
 
 /**
  * Средняя
@@ -75,7 +140,66 @@ fun dateStrToDigit(str: String): String = TODO()
  * Перевести её в строковый формат вида "15 июля 2016".
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String{
+    var stringlist:String =""
+    var month:String =""
+    var size:Int = digital.length
+    var i:Int=0
+    var cont:Int=0
+    var j:Int=0
+
+    if(size>10) return ""
+    while(i<size){
+        if(cont==1){
+            i++
+            while(digital[i]!='.'){
+                month+=digital[i]
+                i++
+            }
+            when(month){
+                "01" -> stringlist+="января "
+                "02" -> stringlist+="февраля "
+                "03" -> stringlist+="марта "
+                "04" -> stringlist+="апреля "
+                "05" -> stringlist+="мая "
+                "06" -> stringlist+="июня "
+                "07" -> stringlist+="июля "
+                "08" -> stringlist+="августа "
+                "09" -> stringlist+="сентября "
+                "10" -> stringlist+="октября "
+                "11" -> stringlist+="ноября "
+                "12" -> stringlist+="декабря "
+                else -> return ""
+            }
+            cont++
+        }
+        else if(cont==2){
+            i++
+            while(i<size){
+                stringlist+=digital[i]
+                i++
+            }
+        }
+        else{
+            if(digital[i]=='0'){
+                i++
+                while(digital[i]!='.'){
+                    stringlist+=digital[i]
+                    i++
+                }
+            }
+            else{
+                while(digital[i]!='.'){
+                    stringlist+=digital[i]
+                    i++
+                }
+            }
+            stringlist+=' '
+            cont++
+        }
+    }
+    return stringlist
+}
 
 /**
  * Средняя
@@ -89,7 +213,37 @@ fun dateDigitToStr(digital: String): String = TODO()
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String{
+    var number:String =""
+    var size:Int = phone.length
+    var i:Int=0
+    if(phone[0]=='+'){
+        number+=phone[0]
+        i++
+    }
+
+    while(i<size){
+        when(phone[i]){
+            '1' -> number += phone[i]
+            '2' -> number += phone[i]
+            '3' -> number += phone[i]
+            '4' -> number += phone[i]
+            '5' -> number += phone[i]
+            '6' -> number += phone[i]
+            '7' -> number += phone[i]
+            '8' -> number += phone[i]
+            '9' -> number += phone[i]
+            '0' -> number += phone[i]
+            '-' -> number
+            ' ' -> number
+            '(' -> number
+            ')' -> number
+            else -> return ""
+        }
+        i++
+    }
+    return number
+}
 
 /**
  * Средняя
@@ -101,7 +255,43 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int{
+    var bigger:MutableList<Int> = mutableListOf()
+    var number:MutableList<Int> = mutableListOf()
+    var size:Int = jumps.length
+    var i:Int=0
+    var j:Int=0
+    var num:Int=0
+
+    while(i<size){
+        when(jumps[i]){
+            '1' -> bigger.add(1)
+            '2' -> bigger.add(2)
+            '3' -> bigger.add(3)
+            '4' -> bigger.add(4)
+            '5' -> bigger.add(5)
+            '6' -> bigger.add(6)
+            '7' -> bigger.add(7)
+            '8' -> bigger.add(8)
+            '9' -> bigger.add(9)
+            '0' -> bigger.add(0)
+            '%' -> num++
+            ' ' -> num++
+            '-' -> num++
+            else -> return -1
+        }
+        i++
+    }
+    if(num<size) {
+        while (j < bigger.size) {
+            number.add((bigger[j] * 100) + (bigger[j + 1] * 10) + (bigger[j + 2]))
+            j += 3
+        }
+        num = Collections.max(number)
+        return num
+    }
+    else return -1
+}
 
 /**
  * Сложная
@@ -113,7 +303,51 @@ fun bestLongJump(jumps: String): Int = TODO()
  * Прочитать строку и вернуть максимальную взятую высоту (230 в примере).
  * При нарушении формата входной строки вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int{
+    var bigger:MutableList<Int> = mutableListOf()
+    var number:MutableList<Int> = mutableListOf()
+    var size:Int = jumps.length
+    var i:Int=0
+    var j:Int=0
+    var num:Int=0
+
+    if(size<=4) return -1
+    while(i<size-4){
+        j=0
+        if(jumps[i+3]==' ' && jumps[i+4]=='+') {
+            while (j < 3) {
+                when (jumps[j+i]) {
+                    '1' -> bigger.add(1)
+                    '2' -> bigger.add(2)
+                    '3' -> bigger.add(3)
+                    '4' -> bigger.add(4)
+                    '5' -> bigger.add(5)
+                    '6' -> bigger.add(6)
+                    '7' -> bigger.add(7)
+                    '8' -> bigger.add(8)
+                    '9' -> bigger.add(9)
+                    '0' -> bigger.add(0)
+                    else -> return -1
+                }
+                j++
+            }
+        i+=5
+        }
+        else i++
+        }
+    if(bigger.isEmpty()==false) {
+        j=0
+        if (num < size) {
+            while (j < bigger.size) {
+                number.add((bigger[j] * 100) + (bigger[j + 1] * 10) + (bigger[j + 2]))
+                j += 3
+            }
+            num = Collections.max(number)
+            return num
+        } else return -1
+    }
+    else return -1
+}
 
 /**
  * Сложная
@@ -124,7 +358,127 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int{
+    var num:Int=0
+    //var contag:String =""
+    var signal:String =""
+    var contagi:MutableList<Int> = mutableListOf()
+    var i:Int=0
+    //var j:Int=0
+    var k:Int=0
+    var plusminus:Int=0
+    var space:Int=0
+
+    if(expression.length==1){
+        when (expression[0]) {
+            '1' -> contagi.add(1)
+            '2' -> contagi.add(2)
+            '3' -> contagi.add(3)
+            '4' -> contagi.add(4)
+            '5' -> contagi.add(5)
+            '6' -> contagi.add(6)
+            '7' -> contagi.add(7)
+            '8' -> contagi.add(8)
+            '9' -> contagi.add(9)
+            '0' -> contagi.add(0)
+        }
+        return contagi[0]
+    }
+    //verificação de formato e preenchimento da string signal
+    while(i<expression.length){
+        if(expression[i]=='+' || expression[i]=='-'){
+            signal+=expression[i]
+            plusminus++
+        }
+        else if(expression[i]==' ') space++
+        i++
+    }
+    if(space!=plusminus*2) return throw ExceptionInInitializerError()
+        //escreve numeros na lista de inteiros
+    i=0
+    while(i<expression.length-2) {
+        if(expression[i]!=' ' && expression[i]!='+' && expression[i]!='-'){
+            if (expression[i + 1] == ' ') {
+                when (expression[i]) {
+                    '0' -> contagi.add(0)
+                    '1' -> contagi.add(1)
+                    '2' -> contagi.add(2)
+                    '3' -> contagi.add(3)
+                    '4' -> contagi.add(4)
+                    '5' -> contagi.add(5)
+                    '6' -> contagi.add(6)
+                    '7' -> contagi.add(7)
+                    '8' -> contagi.add(8)
+                    '9' -> contagi.add(9)
+                }
+            }
+            else {
+                k = 0
+                num=0
+                while (k < 2) {
+                    when (expression[i + k]) {
+                        '1' -> num += 1
+                        '2' -> num += 2
+                        '3' -> num += 3
+                        '4' -> num += 4
+                        '5' -> num += 5
+                        '6' -> num += 6
+                        '7' -> num += 7
+                        '8' -> num += 8
+                        '9' -> num += 9
+                    }
+                    if (k == 0) num *= 10
+                    k++
+                }
+                contagi.add(num)
+                i++
+            }
+        }
+        i++
+    }
+    if(expression[i]==' '){
+        when (expression[i+1]) {
+            '0' -> contagi.add(0)
+            '1' -> contagi.add(1)
+            '2' -> contagi.add(2)
+            '3' -> contagi.add(3)
+            '4' -> contagi.add(4)
+            '5' -> contagi.add(5)
+            '6' -> contagi.add(6)
+            '7' -> contagi.add(7)
+            '8' -> contagi.add(8)
+            '9' -> contagi.add(9)
+        }
+    }
+    else{
+        num=0
+        k = 0
+        while (k < 2) {
+            when (expression[i + k]) {
+                '1' -> num += 1
+                '2' -> num += 2
+                '3' -> num += 3
+                '4' -> num += 4
+                '5' -> num += 5
+                '6' -> num += 6
+                '7' -> num += 7
+                '8' -> num += 8
+                '9' -> num += 9
+            }
+            if (k == 0) num *= 10
+            k++
+        }
+        contagi.add(num)
+    }
+    num=contagi[0]
+    i=1
+    while(i<=contagi.size-1){
+        if(signal[i-1]=='+') num+=contagi[i]
+        else num-=contagi[i]
+        i++
+    }
+    return num
+}
 
 /**
  * Сложная
@@ -135,7 +489,49 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int{
+    var words:MutableList<String> = mutableListOf<String>()
+    var letters:MutableList<Int> = mutableListOf()
+    //val convertbig:List<Char> = listOf('А','Б','В','Г','Д','Е','Ё','Ж','З','И','Й','К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х','Ц','Ч','Ш','Щ','Ъ','Ы','Ь','Э','Ю','Я')
+    //val convertsmall:List<Char> = listOf('а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я')
+    var word:String = ""
+    var index:Int=0
+    var letter:Int=0
+    var space:Int=0
+    var i:Int=0
+    var j:Int=0
+
+    while(i<str.length){
+        if(str[i]==' '){
+            letters.add(letter)
+            words.add(word)
+            word=""
+            letter=0
+            space++
+        }
+        else{
+            letter++
+            word+=str[i].toLowerCase()
+        }
+        i++
+    }
+    words.add(word)
+    letters.add(letter)
+    i=0
+    while(i<words.size-1){
+        if(words[i]==words[i+1]){
+            index=i
+            while(i>0){
+                index+=letters[i-1]
+                i--
+            }
+            return index
+        }
+        i++
+    }
+
+    return -1
+}
 
 /**
  * Сложная
@@ -148,7 +544,7 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть положительными
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String= TODO()
 
 /**
  * Сложная
