@@ -208,7 +208,7 @@ fun flattenPhoneNumber(phone: String): String{
     }
     return number
     }
-    catch (e: NumberFormatException) {
+    catch (e: StringIndexOutOfBoundsException) {
         return ""
     }
 }
@@ -239,6 +239,7 @@ fun bestLongJump(jumps: String): Int{
         }
         var equal=0
         i=0
+        if(bigger.size==1) return number[0]
         for (i in 0..number.size -2)
         {
             if ( number[i] == number[i+1])
@@ -304,10 +305,10 @@ fun plusMinus(expression: String): Int{
     var stringlist:String = expression
     //var number:MutableList<Int> = mutableListOf()
     var i=1
-    val bigger:List<String> = stringlist.split(" ")
-    var value=bigger[0].toInt()
 
     try{
+        val bigger:List<String> = stringlist.split(" ")
+        var value=bigger[0].toInt()
         while(i<bigger.size-1){
             if(bigger[i]=="+"){
                 value+=bigger[i+1].toInt()
@@ -319,8 +320,8 @@ fun plusMinus(expression: String): Int{
         }
         return value
     }
-    catch (e: ExceptionInInitializerError) {
-        return throw IllegalArgumentException(Integer.toString(value))
+    catch (e: IllegalArgumentException) {
+        throw NumberFormatException("Only signed numbers are allowed")
     }
 }
 
