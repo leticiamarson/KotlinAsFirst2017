@@ -3,6 +3,10 @@ package lesson5.task1
 
 import com.sun.xml.internal.fastinfoset.util.StringArray
 import java.util.*
+import java.text.SimpleDateFormat
+import java.text.DateFormat
+import kotlin.reflect.jvm.internal.impl.descriptors.deserialization.PlatformDependentDeclarationFilter
+
 
 /**
  * Пример
@@ -71,66 +75,44 @@ fun main(args: Array<String>) {
  */
 fun dateStrToDigit(str: String): String{
     var stringlist:String =""
-    var month:String =""
-    var size:Int = str.length
-    var i:Int=0
-    var cont:Int=0
-    var j:Int=0
 
-    if(size<10) return ""
-    while(i<size){
-        if(cont==1){
-            i++
-            while(str[i]!=' '){
-                month+=str[i]
-                i++
-            }
-            when(month){
-                "января" -> stringlist+="01."
-                "февраля" -> stringlist+="02."
-                "марта" -> stringlist+="03."
-                "апреля" -> stringlist+="04."
-                "мая" -> stringlist+="05."
-                "июня" -> stringlist+="06."
-                "июля" -> stringlist+="07."
-                "августа" -> stringlist+="08."
-                "сентября" -> stringlist+="09."
-                "октября" -> stringlist+="10."
-                "ноября" -> stringlist+="11."
-                "декабря" -> stringlist+="12."
-                else -> return ""
-            }
-            cont++
+    val parts:List<String> = str.split(" ")
+    if(parts.size!=3) return ""
+    try {
+        when(parts[0]){
+            "1" -> stringlist += "01."
+            "2" -> stringlist += "02."
+            "3" -> stringlist += "03."
+            "4" -> stringlist += "04."
+            "5" -> stringlist += "05."
+            "6" -> stringlist += "06."
+            "7" -> stringlist += "07."
+            "8" -> stringlist += "08."
+            "9" -> stringlist += "09."
+            else -> stringlist += parts[0] + '.'
         }
-        else if(cont==2){
-            i++
-            while(i<size){
-                stringlist+=str[i]
-                i++
-            }
+        when(parts[1]){
+            "января" -> stringlist+="01."
+            "февраля" -> stringlist+="02."
+            "марта" -> stringlist+="03."
+            "апреля" -> stringlist+="04."
+            "мая" -> stringlist+="05."
+            "июня" -> stringlist+="06."
+            "июля" -> stringlist+="07."
+            "августа" -> stringlist+="08."
+            "сентября" -> stringlist+="09."
+            "октября" -> stringlist+="10."
+            "ноября" -> stringlist+="11."
+            "декабря" -> stringlist+="12."
+            else -> return ""
         }
-        else{
-            while(str[j]!=' '){
-                j++
-            }
-            if(j==1){
-                stringlist+='0'
-                while(str[i]!=' '){
-                    stringlist+=str[i]
-                    i++
-                }
-            }
-            else{
-                while(str[i]!=' '){
-                    stringlist+=str[i]
-                    i++
-                }
-            }
-            stringlist+='.'
-            cont++
-        }
+        stringlist+=parts[2]
+
+        return stringlist
     }
-    return stringlist
+    catch (e: NumberFormatException) {
+        return ""
+    }
 }
 
 /**
@@ -142,63 +124,43 @@ fun dateStrToDigit(str: String): String{
  */
 fun dateDigitToStr(digital: String): String{
     var stringlist:String =""
-    var month:String =""
-    var size:Int = digital.length
-    var i:Int=0
-    var cont:Int=0
-    var j:Int=0
+    val parts:List<String> = digital.split(".")
+    if(parts.size!=3) return ""
+    try {
+        when(parts[0]){
+            "01" -> stringlist += "1 "
+            "02" -> stringlist += "2 "
+            "03" -> stringlist += "3 "
+            "04" -> stringlist += "4 "
+            "05" -> stringlist += "5 "
+            "06" -> stringlist += "6 "
+            "07" -> stringlist += "7 "
+            "08" -> stringlist += "8 "
+            "09" -> stringlist += "9 "
+            else -> stringlist += parts[0] + " "
+        }
+        when(parts[1]){
+            "01" -> stringlist+="января "
+            "02" -> stringlist+="февраля "
+            "03" -> stringlist+="марта "
+            "04" -> stringlist+="апреля "
+            "05" -> stringlist+="мая "
+            "06" -> stringlist+="июня "
+            "07" -> stringlist+="июля "
+            "08" -> stringlist+="августа "
+            "09" -> stringlist+="сентября "
+            "10" -> stringlist+="октября "
+            "11" -> stringlist+="ноября "
+            "12" -> stringlist+="декабря "
+            else -> return ""
+        }
+        stringlist+=parts[2]
 
-    if(size>10) return ""
-    while(i<size){
-        if(cont==1){
-            i++
-            while(digital[i]!='.'){
-                month+=digital[i]
-                i++
-            }
-            when(month){
-                "01" -> stringlist+="января "
-                "02" -> stringlist+="февраля "
-                "03" -> stringlist+="марта "
-                "04" -> stringlist+="апреля "
-                "05" -> stringlist+="мая "
-                "06" -> stringlist+="июня "
-                "07" -> stringlist+="июля "
-                "08" -> stringlist+="августа "
-                "09" -> stringlist+="сентября "
-                "10" -> stringlist+="октября "
-                "11" -> stringlist+="ноября "
-                "12" -> stringlist+="декабря "
-                else -> return ""
-            }
-            cont++
-        }
-        else if(cont==2){
-            i++
-            while(i<size){
-                stringlist+=digital[i]
-                i++
-            }
-        }
-        else{
-            if(digital[i]=='0'){
-                i++
-                while(digital[i]!='.'){
-                    stringlist+=digital[i]
-                    i++
-                }
-            }
-            else{
-                while(digital[i]!='.'){
-                    stringlist+=digital[i]
-                    i++
-                }
-            }
-            stringlist+=' '
-            cont++
-        }
-    }
     return stringlist
+    }
+    catch (e: NumberFormatException) {
+        return ""
+    }
 }
 
 /**
@@ -217,6 +179,8 @@ fun flattenPhoneNumber(phone: String): String{
     var number:String =""
     var size:Int = phone.length
     var i:Int=0
+
+    try{
     if(phone[0]=='+'){
         number+=phone[0]
         i++
@@ -243,6 +207,10 @@ fun flattenPhoneNumber(phone: String): String{
         i++
     }
     return number
+    }
+    catch (e: NumberFormatException) {
+        return ""
+    }
 }
 
 /**
@@ -256,7 +224,39 @@ fun flattenPhoneNumber(phone: String): String{
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int{
-    var bigger:MutableList<Int> = mutableListOf()
+    var stringlist:String =jumps
+    var number:MutableList<Int> = mutableListOf()
+    var i=0
+
+    try{
+    //while(i<jumps.length) {
+        stringlist = jumps.replace("%", "")
+        stringlist = stringlist.replace("-", "")
+        stringlist = stringlist.replace("+", "")
+        //i++ }
+    val bigger:List<String> = stringlist.split(" ")
+        while(i<bigger.size){
+            if(bigger[i]!="") number.add(bigger[i].toInt())
+            i++
+        }
+        //start
+        var equal=0
+        i=0
+        for (i in 0..number.size -2)
+        {
+            if ( number[i] == number[i+1])
+            {
+                equal++
+            }
+        }
+        //end
+        if(equal+1==number.size) return -1
+        return Collections.max(number)
+    }
+    catch (e: NoSuchElementException) {
+        return -1
+    }
+    /*var bigger:MutableList<Int> = mutableListOf()
     var number:MutableList<Int> = mutableListOf()
     var size:Int = jumps.length
     var i:Int=0
@@ -290,7 +290,7 @@ fun bestLongJump(jumps: String): Int{
         num = Collections.max(number)
         return num
     }
-    else return -1
+    else return -1*/
 }
 
 /**
@@ -298,13 +298,38 @@ fun bestLongJump(jumps: String): Int{
  *
  * Результаты спортсмена на соревнованиях в прыжках в высоту представлены строкой вида
  * "220 + 224 %+ 228 %- 230 + 232 %%- 234 %".
+ * "220.+.224..+.228..-.230.+.232...-.234.."
  * Здесь + соответствует удачной попытке, % неудачной, - пропущенной.
  * Высота и соответствующие ей попытки разделяются пробелом.
  * Прочитать строку и вернуть максимальную взятую высоту (230 в примере).
  * При нарушении формата входной строки вернуть -1.
  */
 fun bestHighJump(jumps: String): Int{
-    var bigger:MutableList<Int> = mutableListOf()
+    var stringlist:String =jumps
+    var value= ""
+    var number:MutableList<Int> = mutableListOf()
+    var i=0
+
+    try{
+        stringlist = jumps.replace("%", " ")
+        val bigger:List<String> = stringlist.split(" ")
+        while(i<bigger.size){
+            if(bigger[i]=="+"){
+                number.add(value.toInt())
+                value=""
+            }
+            else if(bigger[i]=="-" || bigger[i]=="%" ) value=""
+            else value+=bigger[i]
+            //number.add(bigger[i].toInt())
+            i++
+        }
+        if(number.size==1) return number[0]
+        return Collections.max(number)
+    }
+    catch (e: NoSuchElementException) {
+        return -1
+    }
+    /*var bigger:MutableList<Int> = mutableListOf()
     var number:MutableList<Int> = mutableListOf()
     var size:Int = jumps.length
     var i:Int=0
@@ -347,6 +372,7 @@ fun bestHighJump(jumps: String): Int{
         } else return -1
     }
     else return -1
+    */
 }
 
 /**
@@ -359,7 +385,29 @@ fun bestHighJump(jumps: String): Int{
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int{
-    var num:Int=0
+    var stringlist:String = expression
+    //var number:MutableList<Int> = mutableListOf()
+    var i=1
+    val bigger:List<String> = stringlist.split(" ")
+    var value=bigger[0].toInt()
+
+    try{
+        while(i<bigger.size-1){
+            if(bigger[i]=="+"){
+                value+=bigger[i+1].toInt()
+            }
+            else if(bigger[i]=="-"){
+                value -= bigger[i+1].toInt()
+            }
+            i++
+        }
+        return value
+    }
+    catch (e: ExceptionInInitializerError) {
+        return throw IllegalArgumentException(Integer.toString(value))
+    }
+
+    /*var num:Int=0
     //var contag:String =""
     var signal:String =""
     var contagi:MutableList<Int> = mutableListOf()
@@ -478,6 +526,7 @@ fun plusMinus(expression: String): Int{
         i++
     }
     return num
+    */
 }
 
 /**
@@ -544,7 +593,45 @@ fun firstDuplicateIndex(str: String): Int{
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть положительными
  */
-fun mostExpensive(description: String): String= TODO()
+fun mostExpensive(description: String): String{
+    var number:String = ""
+    var word:String = ""
+    var space:Int=0
+    var product:MutableList<String> = mutableListOf()
+    var value:MutableList<Double> = mutableListOf()
+    var i:Int=0
+
+    if(description.isEmpty()) return ""
+    while(i<description.length){
+        if(space%2==0){
+            while(description[i]!=' '){
+                word+=description[i]
+                i++
+            }
+            product.add(word)
+            word=""
+        }
+        else{
+            while(i<description.length && description[i]!=';'){
+                number+=description[i]
+                i++
+            }
+            value.add(number.toDouble())
+            number=""
+            i++
+        }
+        space++
+        i++
+    }
+    i=0
+    while(i<product.size){
+        if(value[i]==value.max()){
+            return product[i]
+        }
+        i++
+    }
+    return ""
+}
 
 /**
  * Сложная
@@ -557,7 +644,85 @@ fun mostExpensive(description: String): String= TODO()
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-fun fromRoman(roman: String): Int = TODO()
+fun fromRoman(roman: String): Int{
+    var i:Int=0
+    var v:Int=0
+    var no:String=""
+
+    if(roman.length==1){
+        when(roman[0]){
+            'I'-> return 1
+            'V'-> return 5
+            'X'-> return 10
+            'L'-> return 50
+            'C'-> return 100
+            'D'-> return 500
+            'M'-> return 1000
+            else-> return -1
+        }
+    }
+    else if(roman.isEmpty()) return -1
+
+    while(i<roman.length-1){
+        if(roman[i]=='I') {
+            if(roman[i+1]=='V'){
+                v+=4
+                i++
+            }
+            else if(roman[i+1]=='X') {
+                v+=9
+                i++
+            }
+            else v+=1
+        }
+        else if(roman[i]=='X'){
+            if(roman[i+1]=='L'){
+                v+=40
+                i++
+            }
+            else if(roman[i+1]=='C') {
+                v+=90
+                i++
+            }
+            else v+=10
+        }
+        else if(roman[i]=='C'){
+            if(roman[i+1]=='D'){
+                v+=400
+                i++
+            }
+            else if(roman[i+1]=='M') {
+                v+=900
+                i++
+            }
+            else v+=100
+        }
+        else{
+            when(roman[i]){
+                'V'-> v+=5
+                'L'-> v+=50
+                'D'-> v+=500
+                'M'-> v+=1000
+                else-> return -1
+            }
+        }
+        i++
+    }
+    no+=roman[roman.length-2]
+    no+=roman[roman.length-1]
+    if(no!="IV" && no!="IX" && no!="XL" && no!="XC" && no!="CD" && no!="CM"){
+    when(roman[roman.length-1]){
+        'I'-> v+=1
+        'V'-> v+=5
+        'X'-> v+=10
+        'L'-> v+=50
+        'C'-> v+=100
+        'D'-> v+=500
+        'M'-> v+=1000
+    }
+    }
+    return v
+}
 
 /**
  * Очень сложная
@@ -595,4 +760,5 @@ fun fromRoman(roman: String): Int = TODO()
  * IllegalArgumentException должен бросаться даже если ошибочная команда не была достигнута в ходе выполнения.
  *
  */
-fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
+fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int>=TODO()
+}
