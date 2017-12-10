@@ -227,12 +227,11 @@ fun bestLongJump(jumps: String): Int{
     var stringlist:String =jumps
     var number:MutableList<Int> = mutableListOf()
     var i=0
-
-    try{
-        stringlist = jumps.replace("%", "")
-        stringlist = stringlist.replace("-", "")
-        stringlist = stringlist.replace("+", "")
+    stringlist = jumps.replace("%", "")
+    stringlist = stringlist.replace("-", "")
+    stringlist = stringlist.replace("+", "")
     val bigger:List<String> = stringlist.split(" ")
+    try{
         while(i<bigger.size){
             if(bigger[i]!="") number.add(bigger[i].toInt())
             i++
@@ -252,6 +251,9 @@ fun bestLongJump(jumps: String): Int{
     }
     catch (e: NoSuchElementException) {
         return -1
+    }
+    catch (e: IndexOutOfBoundsException){
+        return-1
     }
 }
 
@@ -290,6 +292,9 @@ fun bestHighJump(jumps: String): Int{
     catch (e: NoSuchElementException) {
         return -1
     }
+    catch (e: IndexOutOfBoundsException){
+        return-1
+    }
 }
 
 /**
@@ -320,8 +325,8 @@ fun plusMinus(expression: String): Int{
         }
         return value
     }
-    catch (e: IllegalArgumentException) {
-        throw NumberFormatException("Only signed numbers are allowed")
+    catch (e: NumberFormatException) {
+        return throw IllegalArgumentException("Only signed numbers are allowed")
     }
 }
 
