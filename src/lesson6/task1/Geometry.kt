@@ -64,6 +64,8 @@ class Triangle private constructor(private val points: Set<Point>) {
  * Окружность с заданным центром и радиусом
  */
 data class Circle(val center: Point, val radius: Double) {
+    val x: Double = center.x
+    val y: Double = center.y
     /**
      * Простая
      *
@@ -72,14 +74,22 @@ data class Circle(val center: Point, val radius: Double) {
      * расстояние между их центрами минус сумма их радиусов.
      * Расстояние между пересекающимися окружностями считать равным 0.0.
      */
-    fun distance(other: Circle): Double = TODO()
+    fun distance(other: Circle): Double{
+        val dist = Math.sqrt(sqr(x - other.x) + sqr(y - other.y))-(radius + other.radius)
+        if(contains(center).equals(true) && dist!=-1.0) return dist
+        else return 0.0
+    }
 
     /**
      * Тривиальная
      *
      * Вернуть true, если и только если окружность содержит данную точку НА себе или ВНУТРИ себя
      */
-    fun contains(p: Point): Boolean = TODO()
+    fun contains(p: Point): Boolean {
+        val i:Double = p.x
+        val j:Double = p.y
+        return sqr(x - i) + sqr(y - j) <= sqr(radius)
+    }
 }
 
 /**
