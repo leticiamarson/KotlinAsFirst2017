@@ -229,17 +229,14 @@ fun bestLongJump(jumps: String): Int{
     var i=0
 
     try{
-    //while(i<jumps.length) {
         stringlist = jumps.replace("%", "")
         stringlist = stringlist.replace("-", "")
         stringlist = stringlist.replace("+", "")
-        //i++ }
     val bigger:List<String> = stringlist.split(" ")
         while(i<bigger.size){
             if(bigger[i]!="") number.add(bigger[i].toInt())
             i++
         }
-        //start
         var equal=0
         i=0
         for (i in 0..number.size -2)
@@ -249,48 +246,12 @@ fun bestLongJump(jumps: String): Int{
                 equal++
             }
         }
-        //end
         if(equal+1==number.size) return -1
         return Collections.max(number)
     }
     catch (e: NoSuchElementException) {
         return -1
     }
-    /*var bigger:MutableList<Int> = mutableListOf()
-    var number:MutableList<Int> = mutableListOf()
-    var size:Int = jumps.length
-    var i:Int=0
-    var j:Int=0
-    var num:Int=0
-
-    while(i<size){
-        when(jumps[i]){
-            '1' -> bigger.add(1)
-            '2' -> bigger.add(2)
-            '3' -> bigger.add(3)
-            '4' -> bigger.add(4)
-            '5' -> bigger.add(5)
-            '6' -> bigger.add(6)
-            '7' -> bigger.add(7)
-            '8' -> bigger.add(8)
-            '9' -> bigger.add(9)
-            '0' -> bigger.add(0)
-            '%' -> num++
-            ' ' -> num++
-            '-' -> num++
-            else -> return -1
-        }
-        i++
-    }
-    if(num<size) {
-        while (j < bigger.size) {
-            number.add((bigger[j] * 100) + (bigger[j + 1] * 10) + (bigger[j + 2]))
-            j += 3
-        }
-        num = Collections.max(number)
-        return num
-    }
-    else return -1*/
 }
 
 /**
@@ -320,7 +281,6 @@ fun bestHighJump(jumps: String): Int{
             }
             else if(bigger[i]=="-" || bigger[i]=="%" ) value=""
             else value+=bigger[i]
-            //number.add(bigger[i].toInt())
             i++
         }
         if(number.size==1) return number[0]
@@ -329,50 +289,6 @@ fun bestHighJump(jumps: String): Int{
     catch (e: NoSuchElementException) {
         return -1
     }
-    /*var bigger:MutableList<Int> = mutableListOf()
-    var number:MutableList<Int> = mutableListOf()
-    var size:Int = jumps.length
-    var i:Int=0
-    var j:Int=0
-    var num:Int=0
-
-    if(size<=4) return -1
-    while(i<size-4){
-        j=0
-        if(jumps[i+3]==' ' && jumps[i+4]=='+') {
-            while (j < 3) {
-                when (jumps[j+i]) {
-                    '1' -> bigger.add(1)
-                    '2' -> bigger.add(2)
-                    '3' -> bigger.add(3)
-                    '4' -> bigger.add(4)
-                    '5' -> bigger.add(5)
-                    '6' -> bigger.add(6)
-                    '7' -> bigger.add(7)
-                    '8' -> bigger.add(8)
-                    '9' -> bigger.add(9)
-                    '0' -> bigger.add(0)
-                    else -> return -1
-                }
-                j++
-            }
-        i+=5
-        }
-        else i++
-        }
-    if(bigger.isEmpty()==false) {
-        j=0
-        if (num < size) {
-            while (j < bigger.size) {
-                number.add((bigger[j] * 100) + (bigger[j + 1] * 10) + (bigger[j + 2]))
-                j += 3
-            }
-            num = Collections.max(number)
-            return num
-        } else return -1
-    }
-    else return -1
-    */
 }
 
 /**
@@ -406,127 +322,6 @@ fun plusMinus(expression: String): Int{
     catch (e: ExceptionInInitializerError) {
         return throw IllegalArgumentException(Integer.toString(value))
     }
-
-    /*var num:Int=0
-    //var contag:String =""
-    var signal:String =""
-    var contagi:MutableList<Int> = mutableListOf()
-    var i:Int=0
-    //var j:Int=0
-    var k:Int=0
-    var plusminus:Int=0
-    var space:Int=0
-
-    if(expression.length==1){
-        when (expression[0]) {
-            '1' -> contagi.add(1)
-            '2' -> contagi.add(2)
-            '3' -> contagi.add(3)
-            '4' -> contagi.add(4)
-            '5' -> contagi.add(5)
-            '6' -> contagi.add(6)
-            '7' -> contagi.add(7)
-            '8' -> contagi.add(8)
-            '9' -> contagi.add(9)
-            '0' -> contagi.add(0)
-        }
-        return contagi[0]
-    }
-    //verificação de formato e preenchimento da string signal
-    while(i<expression.length){
-        if(expression[i]=='+' || expression[i]=='-'){
-            signal+=expression[i]
-            plusminus++
-        }
-        else if(expression[i]==' ') space++
-        i++
-    }
-    if(space!=plusminus*2) return throw ExceptionInInitializerError()
-        //escreve numeros na lista de inteiros
-    i=0
-    while(i<expression.length-2) {
-        if(expression[i]!=' ' && expression[i]!='+' && expression[i]!='-'){
-            if (expression[i + 1] == ' ') {
-                when (expression[i]) {
-                    '0' -> contagi.add(0)
-                    '1' -> contagi.add(1)
-                    '2' -> contagi.add(2)
-                    '3' -> contagi.add(3)
-                    '4' -> contagi.add(4)
-                    '5' -> contagi.add(5)
-                    '6' -> contagi.add(6)
-                    '7' -> contagi.add(7)
-                    '8' -> contagi.add(8)
-                    '9' -> contagi.add(9)
-                }
-            }
-            else {
-                k = 0
-                num=0
-                while (k < 2) {
-                    when (expression[i + k]) {
-                        '1' -> num += 1
-                        '2' -> num += 2
-                        '3' -> num += 3
-                        '4' -> num += 4
-                        '5' -> num += 5
-                        '6' -> num += 6
-                        '7' -> num += 7
-                        '8' -> num += 8
-                        '9' -> num += 9
-                    }
-                    if (k == 0) num *= 10
-                    k++
-                }
-                contagi.add(num)
-                i++
-            }
-        }
-        i++
-    }
-    if(expression[i]==' '){
-        when (expression[i+1]) {
-            '0' -> contagi.add(0)
-            '1' -> contagi.add(1)
-            '2' -> contagi.add(2)
-            '3' -> contagi.add(3)
-            '4' -> contagi.add(4)
-            '5' -> contagi.add(5)
-            '6' -> contagi.add(6)
-            '7' -> contagi.add(7)
-            '8' -> contagi.add(8)
-            '9' -> contagi.add(9)
-        }
-    }
-    else{
-        num=0
-        k = 0
-        while (k < 2) {
-            when (expression[i + k]) {
-                '1' -> num += 1
-                '2' -> num += 2
-                '3' -> num += 3
-                '4' -> num += 4
-                '5' -> num += 5
-                '6' -> num += 6
-                '7' -> num += 7
-                '8' -> num += 8
-                '9' -> num += 9
-            }
-            if (k == 0) num *= 10
-            k++
-        }
-        contagi.add(num)
-    }
-    num=contagi[0]
-    i=1
-    while(i<=contagi.size-1){
-        if(signal[i-1]=='+') num+=contagi[i]
-        else num-=contagi[i]
-        i++
-    }
-    return num
-    */
 }
 
 /**
@@ -760,5 +555,4 @@ fun fromRoman(roman: String): Int{
  * IllegalArgumentException должен бросаться даже если ошибочная команда не была достигнута в ходе выполнения.
  *
  */
-fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int>=TODO()
-}
+fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
