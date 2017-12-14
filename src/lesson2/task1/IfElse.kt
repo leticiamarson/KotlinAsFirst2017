@@ -88,20 +88,13 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
     var rook1y: Boolean = kingY == rookY1
     var rook2x: Boolean = kingX == rookX2
     var rook2y: Boolean = kingY == rookY2
-    var rook1:Boolean = false
-    var rook2:Boolean = false
+    var rook1: Boolean = rook1x || rook1y
+    var rook2: Boolean = rook2x || rook2y
 
-    if(rook1x==true || rook1y==true){
-        rook1=true
-    }
-    else if(rook2x==true || rook2y==true){
-        rook2=true
-    }
-    when{
-        rook2==true && rook1x==true || rook2==true && rook1y==true -> return 3
-        rook1==true && rook2y==true || rook1==true && rook2x==true -> return 3
-        rook1==true-> return 1
-        rook2==true-> return 2
+    when {
+        rook2 == true && rook1 == true -> return 3
+        rook1 == true -> return 1
+        rook2 == true -> return 2
         else -> return 0
     }
 }
@@ -119,19 +112,15 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int{
-    var i:Int = 0
-
-    if(kingX == rookX || kingY == rookY){
-        i=1
+    val rook: Boolean = kingX == rookX || kingY == rookY
+    val bishop: Boolean = sqr((kingX - bishopX).toDouble()) == sqr((kingY - bishopY).toDouble())
+    val all: Boolean = bishop && rook
+    when {
+        all == true -> return 3
+        rook == true -> return 1
+        bishop == true -> return 2
+        else -> return 0
     }
-    else if(sqr((kingX-bishopX).toDouble()) == sqr((kingY-bishopY).toDouble())){
-        i=2
-    }
-    else i=0
-    if((i==2 && (kingX == rookX || kingY == rookY)) || (i==1 && (sqr((kingX-bishopX).toDouble())== sqr((kingY-bishopY).toDouble())))) {
-        i=3
-    }
-    return i
 }
 
 /**
