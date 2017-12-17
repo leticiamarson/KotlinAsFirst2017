@@ -194,14 +194,14 @@ class Line private constructor(val b: Double, val angle: Double) {
     }
 
     constructor(point: Point, angle: Double): this(point.y * Math.cos(angle) - point.x * Math.sin(angle), angle)
-
     /**
      * Средняя
      *
      * Найти точку пересечения с другой линией.
      * Для этого необходимо составить и решить систему из двух уравнений (каждое для своей прямой)
      */
-    fun crossPoint(other: Line): Point = TODO()
+    fun crossPoint(other: Line): Point= TODO()
+        
 
     override fun equals(other: Any?) = other is Line && angle == other.angle && b == other.b
 
@@ -219,22 +219,25 @@ class Line private constructor(val b: Double, val angle: Double) {
  *
  * Построить прямую по отрезку
  */
-fun lineBySegment(s: Segment): Line = TODO()
+fun lineBySegment(s: Segment): Line = Line(s.begin, (Math.atan((s.end.y - s.begin.y) / (s.end.x - s.begin.x))))
 
 /**
  * Средняя
  *
  * Построить прямую по двум точкам
  */
-fun lineByPoints(a: Point, b: Point): Line = TODO()
+fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a, b))
 
 /**
  * Сложная
  *
  * Построить серединный перпендикуляр по отрезку или по двум точкам
  */
-fun bisectorByPoints(a: Point, b: Point): Line = TODO()
-
+fun bisectorByPoints(a: Point, b: Point): Line {
+    val center = Point((a.x + b.x)/2, (a.y + b.y)/2)
+    if (a.x == b.x) return Line(center, 0.0)
+    return Line(center,  Math.PI/2)
+}
 /**
  * Средняя
  *
