@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson3.task1
 
 import java.lang.Math.pow
@@ -37,7 +38,7 @@ fun isPrime(n: Int): Boolean {
  */
 fun isPerfect(n: Int): Boolean {
     var sum = 1
-    for (m in 2..n/2) {
+    for (m in 2..n / 2) {
         if (n % m > 0) continue
         sum += m
         if (sum > n) break
@@ -63,13 +64,12 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Найти количество цифр в заданном числе n.
  * Например, число 1 содержит 1 цифру, 456 -- 3 цифры, 65536 -- 5 цифр.
  */
-fun digitNumber(n: Int): Int{
-    var size:Int=0
-    var n:Int=n
-    if(n==0){
+fun digitNumber(n: Int): Int {
+    var size: Int = 0
+    var n: Int = n
+    if (n == 0) {
         return 1
-    }
-    else {
+    } else {
         while (n != 0) {
             n = n / 10
             size++
@@ -84,7 +84,7 @@ fun digitNumber(n: Int): Int{
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int{
+fun fib(n: Int): Int {
     var lastNumber: Int = 1
     var nextNumber: Int = 0
     var numberNow: Int = 1
@@ -104,16 +104,16 @@ fun fib(n: Int): Int{
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int{
+fun lcm(m: Int, n: Int): Int {
     var x = m
     var y = n
-    var result:Int = 0
-    do{
-        result = x%y
-        x=y
-        y=result
-    }while(result!=0)
-    result = (m/x)*n
+    var result: Int = 0
+    do {
+        result = x % y
+        x = y
+        y = result
+    } while (result != 0)
+    result = (m / x) * n
     return result
 }
 
@@ -122,13 +122,13 @@ fun lcm(m: Int, n: Int): Int{
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int{
-    var resto:Int=5
-    var i:Int=1
-    while (resto!=0) {
+fun minDivisor(n: Int): Int {
+    var resto: Int = -1
+    var i: Int = 1
+    while (resto != 0) {
         i++
-        resto=n%i
-        if(i==(n/2)) return n
+        resto = n % i
+        if (isPrime(n)) return n
     }
     return i
 }
@@ -138,12 +138,12 @@ fun minDivisor(n: Int): Int{
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int{
-    var resto:Int = 5
-    var i:Int=n
+fun maxDivisor(n: Int): Int {
+    var resto: Int = -1
+    var i: Int = n
     while (resto != 0) {
         i--
-        resto=n%i
+        resto = n % i
     }
     return i
 }
@@ -155,15 +155,15 @@ fun maxDivisor(n: Int): Int{
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean{
+fun isCoPrime(m: Int, n: Int): Boolean {
     var temp: Int
-    var m:Int= m
-    var n:Int=n
+    var m: Int = m
+    var n: Int = n
 
     while (true) {
         temp = m % n
-        if (temp == 0){
-            if(n==1) return true
+        if (temp == 0) {
+            if (n == 1) return true
             else return false
         }
         m = n
@@ -178,10 +178,10 @@ fun isCoPrime(m: Int, n: Int): Boolean{
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean{
-    var i:Double = m.toDouble()
-    while(i<=n){
-        if((sqrt(i)%1)==0.0) return true
+fun squareBetweenExists(m: Int, n: Int): Boolean {
+    var i: Double = m.toDouble()
+    while (i <= n) {
+        if ((sqrt(i) % 1) == 0.0) return true
         i++
     }
     return false
@@ -195,8 +195,7 @@ fun squareBetweenExists(m: Int, n: Int): Boolean{
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 
-fun sin(x: Double, eps: Double): Double=TODO()
-
+fun sin(x: Double, eps: Double): Double = TODO()
 
 /**
  * Средняя
@@ -213,38 +212,37 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Поменять порядок цифр заданного числа n на обратный: 13478 -> 87431.
  * Не использовать строки при решении задачи.
  */
-fun revert(n: Int): Int{
-    var x:Int = n
-    var cont:Int = 0
-    var result:Int=0
-    var variable:Int=n
-    if(n==0){
-        result=0
-    }
-    else{
-        while(x>0){
+fun revert(n: Int): Int {
+    var x: Int = n
+    var cont: Int = 0
+    var result: Int = 0
+    var variable: Int = n
+    if (n == 0) {
+        result = 0
+    } else {
+        while (x > 0) {
             x /= 10
             cont++
         }
         var arra = IntArray(cont)
-        x=0
-        arra[0] = n%10
-        while(x<cont){
-            arra[x] = variable%10
-            variable/=10
+        x = 0
+        arra[0] = n % 10
+        while (x < cont) {
+            arra[x] = variable % 10
+            variable /= 10
 
             x++
         }
-        var j:Int=0
-        x=cont-1
-        while(x>=0) {
+        var j: Int = 0
+        x = cont - 1
+        while (x >= 0) {
             arra[j] *= (pow(10.0, x.toDouble())).toInt()
             x--
             j++
         }
 
-        x=0
-        while(x<cont){
+        x = 0
+        while (x < cont) {
             result += arra[x]
             x++
         }
@@ -259,40 +257,33 @@ fun revert(n: Int): Int{
  * первая цифра равна последней, вторая -- предпоследней и так далее.
  * 15751 -- палиндром, 3653 -- нет.
  */
-fun isPalindrome(n: Int): Boolean{
-    var result:Boolean=false
-    val y = n.toString()
-    val tamanho:Int = y.length
-    val vetor = IntArray(tamanho)
-    var x:Int=0
-    var variav:Int = n
+fun isPalindrome(n: Int): Boolean {
+    val vetor = IntArray(digitNumber(n))
+    var x: Int = 0
+    var variav: Int = n
 
-    if(n<10){
-        result = true
+    if (n < 10) {
+        return true
     }
-
-    while(x<tamanho){
-        vetor[x] = variav%10
-        variav/=10
-
+    while (x < digitNumber(n)) {
+        vetor[x] = variav % 10
+        variav /= 10
         x++
     }
-    variav = tamanho-1
-    x= 0
-    var cont:Int=0
-    while(x<tamanho-1){
-        if(vetor[x]==vetor[(variav)]){
+    variav = digitNumber(n) - 1
+    x = 0
+    var cont: Int = 0
+    while (x < digitNumber(n) - 1) {
+        if (vetor[x] == vetor[(variav)]) {
             cont++
             variav--
         }
         x++
     }
-
-    if(cont>=tamanho-1){
-        result = true
+    if (cont >= digitNumber(n) - 1) {
+        return true
     }
-
-    return result
+    return false
 }
 
 /**
@@ -301,45 +292,37 @@ fun isPalindrome(n: Int): Boolean{
  * Для заданного числа n определить, содержит ли оно различающиеся цифры.
  * Например, 54 и 323 состоят из разных цифр, а 111 и 0 из одинаковых.
  */
-fun hasDifferentDigits(n: Int): Boolean{
-    var result:Boolean=false
-    val y = n.toString()
-    val tamanho:Int = y.length
-    val vetor = IntArray(tamanho)
-    var x:Int=0
-    var variav:Int = n
-    var cont:Int=0
-    while(x<tamanho){
-        vetor[x] = variav%10
-        variav/=10
-
+fun hasDifferentDigits(n: Int): Boolean {
+    val vetor = IntArray(digitNumber(n))
+    var x: Int = 0
+    var variav: Int = n
+    var cont: Int = 0
+    while (x < digitNumber(n)) {
+        vetor[x] = variav % 10
+        variav /= 10
         x++
     }
-    if(n==0){
-        result = false
-    }
-    else if(n<10){
-        result = false
-    }
-    else if(n>99){
-        x= 0
-        while(x<tamanho-2){
-            if(vetor[x]!=vetor[x+1]){
-                //result += vetor[x]
+    if (n == 0) {
+        return false
+    } else if (n < 10) {
+        return false
+    } else if (n > 99) {
+        x = 0
+        while (x < digitNumber(n) - 2) {
+            if (vetor[x] != vetor[x + 1]) {
                 cont++
             }
             x++
         }
-        if(cont>0){
-            result = true
+        if (cont > 0) {
+            return true
+        }
+    } else {
+        if (vetor[0] != vetor[1]) {
+            return true
         }
     }
-    else{
-        if(vetor[0]!=vetor[1]){
-            result = true
-        }
-    }
-    return result
+    return false
 }
 
 /**
@@ -349,22 +332,22 @@ fun hasDifferentDigits(n: Int): Boolean{
  * 149162536496481100121144...
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
-fun squareSequenceDigit(n: Int): Int{
+fun squareSequenceDigit(n: Int): Int {
     var i = 1
     var result = 1
     var nvalues = 0
-    while (true){
-        result=i*i
-        nvalues+=digitNumber(result)
-        if(nvalues>=n) break
+    while (true) {
+        result = i * i
+        nvalues += digitNumber(result)
+        if (nvalues >= n) break
         i++
     }
-    i=1
-    while(i<=nvalues-n){
-        result/=10
+    i = 1
+    while (i <= nvalues - n) {
+        result /= 10
         i++
     }
-    return result%10
+    return result % 10
 }
 
 
@@ -375,18 +358,18 @@ fun squareSequenceDigit(n: Int): Int{
  * 1123581321345589144...
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
-fun fibSequenceDigit(n: Int): Int{
-    var arr:String=""
-    var y:Int=0
-    var z:Int=1
-    var next_num:Int=0
-    var i:Int= 2
-    arr+= 1
-    while(i<10000){
-        next_num=y+z
-        y=z
-        z=next_num
-        arr+= next_num
+fun fibSequenceDigit(n: Int): Int {
+    var arr: String = ""
+    var y: Int = 0
+    var z: Int = 1
+    var next_num: Int = 0
+    var i: Int = 2
+    arr += 1
+    while (i < 10000) {
+        next_num = y + z
+        y = z
+        z = next_num
+        arr += next_num
         i++
     }
     val result = IntArray(n)
@@ -398,5 +381,5 @@ fun fibSequenceDigit(n: Int): Int{
         result[index] = parsedNumber
         ++index
     }
-    return result[n-1]
+    return result[n - 1]
 }
