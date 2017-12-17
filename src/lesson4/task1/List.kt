@@ -3,6 +3,7 @@ package lesson4.task1
 
 import com.sun.xml.internal.fastinfoset.util.StringArray
 import lesson1.task1.discriminant
+import lesson3.task1.minDivisor
 
 
 /**
@@ -110,19 +111,10 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  */
 fun abs(v: List<Double>): Double{
     var resposta:Double = 0.0
-    //var lista:List<Double> = v
-    var i:Int= 0
-
-    if(v.isEmpty() == true){
-        resposta =0.0
-    }
-    else{
-        while(i<(v.size)){
+        for(i in 0..(v.size-1)){
             resposta += (Math.pow(v[i], 2.0))
-            i++
         }
         resposta = Math.sqrt(resposta)
-    }
     return resposta
 }
 
@@ -157,23 +149,10 @@ fun mean(list: List<Double>): Double{
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double>{
-    var media: Double = 0.0
-    var i: Int = 0
-    if (list.size == 1) {
-        list[0] = 0.0
-    }
-    else {
-        while(i<(list.size)){
-            media += (list[i])
-            i++
-        }
-        media = media/(list.size)
-        i = 0
-        while (i < (list.size)) {
+    var media: Double = mean(list)
+        for (i in 0..(list.size-1)) {
             list[i] = list[i] - media
-            i++
         }
-    }
     return list
 }
 
@@ -185,17 +164,11 @@ fun center(list: MutableList<Double>): MutableList<Double>{
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.0.
  */
 fun times(a: List<Double>, b: List<Double>): Double{
-    var resposta:Double = 0.0
-    var i:Int =0
+    var resposta = 0.0
 
-    if(a.isEmpty() == true || b.isEmpty()==true){
-        resposta =0.0
-    }
-    while(i<a.size){
+    for(i in 0..a.size-1){
         resposta += a[i]*b[i]
-        i++
     }
-
     return resposta
 }
 
@@ -261,34 +234,12 @@ fun accumulate(list: MutableList<Double>): MutableList<Double>{
 fun factorize(n: Int): List<Int>{
     var arr:MutableList<Int> = mutableListOf()
     var number:Int=n
-    var i:Int=2
-    var j:Int=0
-    var primo:Boolean
-    if(n==2){
-        arr.add(2)
+
+    while (number > 1) {
+        arr.add(minDivisor(number))
+        number /= minDivisor(number)
     }
-    else{
-    while(i<=n) {
-        if(n%i==0){
-            primo=true
-            j=2
-            while(j<=(i/2)){
-                if((i%j)==0){
-                primo=false
-                break
-                }
-                j++
-            }
-            if(primo==true){
-                arr.add(i)
-                number/=i
-            }
-        }
-        if(number%i!=0) i++
-    }
-    }
-    val intlist: List<Int> = arr
-    return intlist
+    return arr
 }
 
 /**
@@ -300,37 +251,13 @@ fun factorize(n: Int): List<Int>{
 fun factorizeToString(n: Int): String{
     var result:String=""
     var number:Int=n
-    var i:Int=2
-    var j:Int=0
-    var primo:Boolean
-    if(n==2){
-        result+="2"
-        return result
+    if(n== Int.MAX_VALUE) return (Int.MAX_VALUE).toString()
+    while (number > 1) {
+        result+=minDivisor(number)
+        result+="*"
+        number /= minDivisor(number)
     }
-    else if(n== Int.MAX_VALUE) return (Int.MAX_VALUE).toString()
-    else{
-        while(i<=n) {
-            if(n%i==0){
-                primo=true
-                j=2
-                while(j<=(i/2)){
-                    if((i%j)==0){
-                        primo=false
-                        break
-                    }
-                    j++
-                }
-                if(primo==true){
-                    result += i
-                    result += "*"
-                    number/=i
-                }
-            }
-            if(number%i!=0) i++
-        }
-    }
-    if(result.last()=='*')
-    result = result.substring(0,result.length-1)
+    if(result.last()=='*') result = result.substring(0,result.length-1)
     return result
 }
 
@@ -344,14 +271,11 @@ fun factorizeToString(n: Int): String{
 fun convert(n: Int, base: Int): List<Int>{
     var resto:MutableList<Int> = mutableListOf()
     var number:Int=n
-    if(number>base){
-        do{
-            resto.add(number%base)
-            number = number/base
-        }while(number>=base)
-        resto.add(number)
+    while(number>=base){
+        resto.add(number%base)
+        number = number/base
     }
-    else resto.add(n)
+    resto.add(number)
     return resto.reversed()
 }
 
@@ -364,79 +288,24 @@ fun convert(n: Int, base: Int): List<Int>{
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
 fun convertToString(n: Int, base: Int): String{
-    var stringlist:String =""
-    var number:Int=n
-    //if(number>base){
-    while(number>=base){
-            if((number%base)<10){
-                stringlist += (number%base).toString()
-            }
-            else{
-                when((number%base)-10){
-                    0 -> stringlist+="a"
-                    1 -> stringlist+="b"
-                    2 -> stringlist+="c"
-                    3 -> stringlist+="d"
-                    4 -> stringlist+="e"
-                    5 -> stringlist+="f"
-                    6 -> stringlist+="g"
-                    7 -> stringlist+="h"
-                    8 -> stringlist+="i"
-                    9 -> stringlist+="j"
-                    10 -> stringlist+="k"
-                    11 -> stringlist+="l"
-                    12 -> stringlist+="m"
-                    13 -> stringlist+="n"
-                    14 -> stringlist+="o"
-                    15 -> stringlist+="p"
-                    16 -> stringlist+="q"
-                    17 -> stringlist+="r"
-                    18 -> stringlist+="s"
-                    19 -> stringlist+="t"
-                    20 -> stringlist+="u"
-                    21 -> stringlist+="v"
-                    22 -> stringlist+="w"
-                    23 -> stringlist+="x"
-                    24 -> stringlist+="y"
-                    25 -> stringlist+="z"
-                }
-            }
-            number = number/base
+    var stringlist = StringBuilder()
+    var number: Int = n
+
+    while (number >= base) {
+        if ((number % base) < 10) {
+            stringlist.append(number % base).toString()
+        } else {
+            stringlist.append('a' + ((number % base) - 10))
         }
-    if(number<10)
-        stringlist+=number
-    else{
-        when((number%base)-10){
-            0 -> stringlist+="a"
-            1 -> stringlist+="b"
-            2 -> stringlist+="c"
-            3 -> stringlist+="d"
-            4 -> stringlist+="e"
-            5 -> stringlist+="f"
-            6 -> stringlist+="g"
-            7 -> stringlist+="h"
-            8 -> stringlist+="i"
-            9 -> stringlist+="j"
-            10 -> stringlist+="k"
-            11 -> stringlist+="l"
-            12 -> stringlist+="m"
-            13 -> stringlist+="n"
-            14 -> stringlist+="o"
-            15 -> stringlist+="p"
-            16 -> stringlist+="q"
-            17 -> stringlist+="r"
-            18 -> stringlist+="s"
-            19 -> stringlist+="t"
-            20 -> stringlist+="u"
-            21 -> stringlist+="v"
-            22 -> stringlist+="w"
-            23 -> stringlist+="x"
-            24 -> stringlist+="y"
-            25 -> stringlist+="z"
-        }
+        number = number / base
+    }
+    if (number < 10)
+        stringlist.append(number)
+    else {
+        stringlist.append('a' + ((number % base) - 10))
     }
 
-    return stringlist.reversed()
+    return stringlist.toString().reversed()
 }
 
 /**
@@ -447,16 +316,16 @@ fun convertToString(n: Int, base: Int): String{
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
 fun decimal(digits: List<Int>, base: Int): Int{
-    var result:Double=0.0
-    var i:Int=digits.size-1
-    var j:Int=0
-    if(digits.size==1 && digits[0]<base) return digits[0]
-    else{
-    while(i>=0){
-        result+=digits[j]*Math.pow((base).toDouble(),i.toDouble())
-        i--
-        j++
-    }
+    var result: Double = 0.0
+    var i: Int = digits.size - 1
+    var j: Int = 0
+    if (digits.size == 1 && digits[0] < base) return digits[0]
+    else {
+        while (i >= 0) {
+            result += digits[j] * Math.pow((base).toDouble(), i.toDouble())
+            i--
+            j++
+        }
     }
     return result.toInt()
 }
@@ -471,13 +340,13 @@ fun decimal(digits: List<Int>, base: Int): Int{
  * Например: str = "13c", base = 14 -> 250
  */
 fun decimalFromString(str: String, base: Int): Int{
-    var word:String="abcdefghijklmnopqrstuvwxyz"
-    var result:Int=0
+    var word: String = "abcdefghijklmnopqrstuvwxyz"
+    var result: Int = 0
     var i: Int = 0
-    var str:String=str.reversed()
-    result=str.map {
-        (if (word.contains(it)) word.indexOf(it)+10
-    else it.toString().toInt())*Math.pow(base.toDouble(),i++.toDouble()).toInt()
+    var str: String = str.reversed()
+    result = str.map {
+        (if (word.contains(it)) word.indexOf(it) + 10
+        else it.toString().toInt()) * Math.pow(base.toDouble(), i++.toDouble()).toInt()
     }.sum()
     return result
 }
@@ -601,213 +470,207 @@ fun roman(n: Int): String{
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String{
-    var string:String= n.toString().reversed()
-    val matrix =arrayOf(arrayOf("ноль", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять"),
-                        arrayOf("ноль", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят", "девяносто"),
-                        arrayOf("ноль", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот"),
-                        arrayOf("ноль", "одна тысяча", "две тысячи", "три тысячи", "четыре тысячи", "пять тысяч", "шесть тысяч", "семь тысяч", "восемь тысяч", "девять тысяч"),
-                        arrayOf("ноль", "десять тысяч", "двадцать тысяч", "тридцать тысяч", "сорок тысяч", "пятьдесят тысяч", "шестьдесят тысяч", "семьдесят тысяч", "восемьдесят тысяч", "девяносто тысяч"),
-                        arrayOf("ноль", "сто тысяч", "двести тысяч", "триста тысяч", "четыреста тысяч", "пятьсот тысяч", "шестьсот тысяч", "семьсот тысяч", "восемьсот тысяч", "девятьсот тысяч"))
-    val otharray =arrayOf(arrayOf("одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать"),
-                          arrayOf("одиннадцать тысяч", "двенадцать тысяч", "тринадцать тысяч", "четырнадцать тысяч", "пятнадцать тысяч", "шестнадцать тысяч", "семнадцать тысяч", "восемнадцать тысяч", "девятнадцать тысяч"))
-    var result:MutableList<String> = mutableListOf()
-    var resp:String = ""
-    var i:Int=0
-    var cont0:Int=1
+    var string: String = n.toString().reversed()
+    val matrix = arrayOf(arrayOf("ноль", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять"),
+            arrayOf("ноль", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят", "девяносто"),
+            arrayOf("ноль", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот"),
+            arrayOf("ноль", "одна тысяча", "две тысячи", "три тысячи", "четыре тысячи", "пять тысяч", "шесть тысяч", "семь тысяч", "восемь тысяч", "девять тысяч"),
+            arrayOf("ноль", "десять тысяч", "двадцать тысяч", "тридцать тысяч", "сорок тысяч", "пятьдесят тысяч", "шестьдесят тысяч", "семьдесят тысяч", "восемьдесят тысяч", "девяносто тысяч"),
+            arrayOf("ноль", "сто тысяч", "двести тысяч", "триста тысяч", "четыреста тысяч", "пятьсот тысяч", "шестьсот тысяч", "семьсот тысяч", "восемьсот тысяч", "девятьсот тысяч"))
+    val otharray = arrayOf(arrayOf("одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать"),
+            arrayOf("одиннадцать тысяч", "двенадцать тысяч", "тринадцать тысяч", "четырнадцать тысяч", "пятнадцать тысяч", "шестнадцать тысяч", "семнадцать тысяч", "восемнадцать тысяч", "девятнадцать тысяч"))
+    var result: MutableList<String> = mutableListOf()
+    var resp = StringBuilder()
+    var i: Int = 0
+    var cont0: Int = 1
 
-        if(string.length==1 && string[0]=='0')return "ноль"
-    while(i<string.length){
-        if(i==0) {
-            if (string.length>1){
-            if (string[1] == '1') {
-                when (string[i]) {
-                    '0' -> result.add(matrix[i + 1][1])
-                    '1' -> result.add(otharray[i][0])
-                    '2' -> result.add(otharray[i][1])
-                    '3' -> result.add(otharray[i][2])
-                    '4' -> result.add(otharray[i][3])
-                    '5' -> result.add(otharray[i][4])
-                    '6' -> result.add(otharray[i][5])
-                    '7' -> result.add(otharray[i][6])
-                    '8' -> result.add(otharray[i][7])
-                    '9' -> result.add(otharray[i][8])
-                }
-                cont0++
-                i++
-            }
-            else{
-                when(string[i]){
-                    '0'-> cont0++
-                    '1'-> result.add(matrix[i][1])
-                    '2'-> result.add(matrix[i][2])
-                    '3'-> result.add(matrix[i][3])
-                    '4'-> result.add(matrix[i][4])
-                    '5'-> result.add(matrix[i][5])
-                    '6'-> result.add(matrix[i][6])
-                    '7'-> result.add(matrix[i][7])
-                    '8'-> result.add(matrix[i][8])
-                    '9'-> result.add(matrix[i][9])
-                }
-            }
-            }
-            else{
-                when(string[i]){
-                    '0'-> cont0++
-                    '1'-> result.add(matrix[i][1])
-                    '2'-> result.add(matrix[i][2])
-                    '3'-> result.add(matrix[i][3])
-                    '4'-> result.add(matrix[i][4])
-                    '5'-> result.add(matrix[i][5])
-                    '6'-> result.add(matrix[i][6])
-                    '7'-> result.add(matrix[i][7])
-                    '8'-> result.add(matrix[i][8])
-                    '9'-> result.add(matrix[i][9])
-                }
-            }
-        }
-        if(i==1){
-            when(string[i]){
-                '0'-> cont0++
-                '2'-> result.add(matrix[i][2])
-                '3'-> result.add(matrix[i][3])
-                '4'-> result.add(matrix[i][4])
-                '5'-> result.add(matrix[i][5])
-                '6'-> result.add(matrix[i][6])
-                '7'-> result.add(matrix[i][7])
-                '8'-> result.add(matrix[i][8])
-                '9'-> result.add(matrix[i][9])
-            }
-        }
-        if(i==2){
-            when(string[i]){
-                '0'-> cont0++
-                '1'-> result.add(matrix[i][1])
-                '2'-> result.add(matrix[i][2])
-                '3'-> result.add(matrix[i][3])
-                '4'-> result.add(matrix[i][4])
-                '5'-> result.add(matrix[i][5])
-                '6'-> result.add(matrix[i][6])
-                '7'-> result.add(matrix[i][7])
-                '8'-> result.add(matrix[i][8])
-                '9'-> result.add(matrix[i][9])
-            }
-        }
-        if(i==3){
-            if(string.length>4){
-                if(string [4] == '1'){
-                when (string[i]) {
-                    '0' -> result.add(matrix[1][1])
-                    '0' -> cont0++
-                    '1' -> result.add(otharray[1][0])
-                    '2' -> result.add(otharray[1][1])
-                    '3' -> result.add(otharray[1][2])
-                    '4' -> result.add(otharray[1][3])
-                    '5' -> result.add(otharray[1][4])
-                    '6' -> result.add(otharray[1][5])
-                    '7' -> result.add(otharray[1][6])
-                    '8' -> result.add(otharray[1][7])
-                    '9' -> result.add(otharray[1][8])
-                }
-                cont0++
-                i++
-            }
-                else{
-                    when(string[i]){
-                        '0'-> cont0++
-                        '1'-> result.add(matrix[i][1])
-                        '2'-> result.add(matrix[i][2])
-                        '3'-> result.add(matrix[i][3])
-                        '4'-> result.add(matrix[i][4])
-                        '5'-> result.add(matrix[i][5])
-                        '6'-> result.add(matrix[i][6])
-                        '7'-> result.add(matrix[i][7])
-                        '8'-> result.add(matrix[i][8])
-                        '9'-> result.add(matrix[i][9])
+    if (string.length == 1 && string[0] == '0') return "ноль"
+    while (i < string.length) {
+        if (i == 0) {
+            if (string.length > 1) {
+                if (string[1] == '1') {
+                    when (string[i]) {
+                        '0' -> result.add(matrix[i + 1][1])
+                        '1' -> result.add(otharray[i][0])
+                        '2' -> result.add(otharray[i][1])
+                        '3' -> result.add(otharray[i][2])
+                        '4' -> result.add(otharray[i][3])
+                        '5' -> result.add(otharray[i][4])
+                        '6' -> result.add(otharray[i][5])
+                        '7' -> result.add(otharray[i][6])
+                        '8' -> result.add(otharray[i][7])
+                        '9' -> result.add(otharray[i][8])
+                    }
+                    cont0++
+                    i++
+                } else {
+                    when (string[i]) {
+                        '0' -> cont0++
+                        '1' -> result.add(matrix[i][1])
+                        '2' -> result.add(matrix[i][2])
+                        '3' -> result.add(matrix[i][3])
+                        '4' -> result.add(matrix[i][4])
+                        '5' -> result.add(matrix[i][5])
+                        '6' -> result.add(matrix[i][6])
+                        '7' -> result.add(matrix[i][7])
+                        '8' -> result.add(matrix[i][8])
+                        '9' -> result.add(matrix[i][9])
                     }
                 }
-        }
-            else{
-                when(string[i]){
-                    '0'-> cont0++
-                    '1'-> result.add(matrix[i][1])
-                    '2'-> result.add(matrix[i][2])
-                    '3'-> result.add(matrix[i][3])
-                    '4'-> result.add(matrix[i][4])
-                    '5'-> result.add(matrix[i][5])
-                    '6'-> result.add(matrix[i][6])
-                    '7'-> result.add(matrix[i][7])
-                    '8'-> result.add(matrix[i][8])
-                    '9'-> result.add(matrix[i][9])
+            } else {
+                when (string[i]) {
+                    '0' -> cont0++
+                    '1' -> result.add(matrix[i][1])
+                    '2' -> result.add(matrix[i][2])
+                    '3' -> result.add(matrix[i][3])
+                    '4' -> result.add(matrix[i][4])
+                    '5' -> result.add(matrix[i][5])
+                    '6' -> result.add(matrix[i][6])
+                    '7' -> result.add(matrix[i][7])
+                    '8' -> result.add(matrix[i][8])
+                    '9' -> result.add(matrix[i][9])
                 }
             }
         }
-        if(i==4){
-            if(string[i-1]=='0'){
-                when(string[i]){
-                    '0'-> cont0++
-                    '2'-> result.add(matrix[i][2])
-                    '3'-> result.add(matrix[i][3])
-                    '4'-> result.add(matrix[i][4])
-                    '5'-> result.add(matrix[i][5])
-                    '6'-> result.add(matrix[i][6])
-                    '7'-> result.add(matrix[i][7])
-                    '8'-> result.add(matrix[i][8])
-                    '9'-> result.add(matrix[i][9])
-                }
+        if (i == 1) {
+            when (string[i]) {
+                '0' -> cont0++
+                '2' -> result.add(matrix[i][2])
+                '3' -> result.add(matrix[i][3])
+                '4' -> result.add(matrix[i][4])
+                '5' -> result.add(matrix[i][5])
+                '6' -> result.add(matrix[i][6])
+                '7' -> result.add(matrix[i][7])
+                '8' -> result.add(matrix[i][8])
+                '9' -> result.add(matrix[i][9])
             }
-            else{
-                when(string[i]){
-                    '0'-> cont0++
-                    '2'-> result.add(matrix[1][2])
-                    '3'-> result.add(matrix[1][3])
-                    '4'-> result.add(matrix[1][4])
-                    '5'-> result.add(matrix[1][5])
-                    '6'-> result.add(matrix[1][6])
-                    '7'-> result.add(matrix[1][7])
-                    '8'-> result.add(matrix[1][8])
-                    '9'-> result.add(matrix[1][9])
+        }
+        if (i == 2) {
+            when (string[i]) {
+                '0' -> cont0++
+                '1' -> result.add(matrix[i][1])
+                '2' -> result.add(matrix[i][2])
+                '3' -> result.add(matrix[i][3])
+                '4' -> result.add(matrix[i][4])
+                '5' -> result.add(matrix[i][5])
+                '6' -> result.add(matrix[i][6])
+                '7' -> result.add(matrix[i][7])
+                '8' -> result.add(matrix[i][8])
+                '9' -> result.add(matrix[i][9])
+            }
+        }
+        if (i == 3) {
+            if (string.length > 4) {
+                if (string[4] == '1') {
+                    when (string[i]) {
+                        '0' -> result.add(matrix[1][1])
+                        '0' -> cont0++
+                        '1' -> result.add(otharray[1][0])
+                        '2' -> result.add(otharray[1][1])
+                        '3' -> result.add(otharray[1][2])
+                        '4' -> result.add(otharray[1][3])
+                        '5' -> result.add(otharray[1][4])
+                        '6' -> result.add(otharray[1][5])
+                        '7' -> result.add(otharray[1][6])
+                        '8' -> result.add(otharray[1][7])
+                        '9' -> result.add(otharray[1][8])
+                    }
+                    cont0++
+                    i++
+                } else {
+                    when (string[i]) {
+                        '0' -> cont0++
+                        '1' -> result.add(matrix[i][1])
+                        '2' -> result.add(matrix[i][2])
+                        '3' -> result.add(matrix[i][3])
+                        '4' -> result.add(matrix[i][4])
+                        '5' -> result.add(matrix[i][5])
+                        '6' -> result.add(matrix[i][6])
+                        '7' -> result.add(matrix[i][7])
+                        '8' -> result.add(matrix[i][8])
+                        '9' -> result.add(matrix[i][9])
+                    }
+                }
+            } else {
+                when (string[i]) {
+                    '0' -> cont0++
+                    '1' -> result.add(matrix[i][1])
+                    '2' -> result.add(matrix[i][2])
+                    '3' -> result.add(matrix[i][3])
+                    '4' -> result.add(matrix[i][4])
+                    '5' -> result.add(matrix[i][5])
+                    '6' -> result.add(matrix[i][6])
+                    '7' -> result.add(matrix[i][7])
+                    '8' -> result.add(matrix[i][8])
+                    '9' -> result.add(matrix[i][9])
                 }
             }
         }
-        if(i==5){
-            if(string[3]=='0' && string[4]=='0'){
-                when(string[i]){
-                    '0'-> cont0++
-                    '1'-> result.add(matrix[i][1])
-                    '2'-> result.add(matrix[i][2])
-                    '3'-> result.add(matrix[i][3])
-                    '4'-> result.add(matrix[i][4])
-                    '5'-> result.add(matrix[i][5])
-                    '6'-> result.add(matrix[i][6])
-                    '7'-> result.add(matrix[i][7])
-                    '8'-> result.add(matrix[i][8])
-                    '9'-> result.add(matrix[i][9])
+        if (i == 4) {
+            if (string[i - 1] == '0') {
+                when (string[i]) {
+                    '0' -> cont0++
+                    '2' -> result.add(matrix[i][2])
+                    '3' -> result.add(matrix[i][3])
+                    '4' -> result.add(matrix[i][4])
+                    '5' -> result.add(matrix[i][5])
+                    '6' -> result.add(matrix[i][6])
+                    '7' -> result.add(matrix[i][7])
+                    '8' -> result.add(matrix[i][8])
+                    '9' -> result.add(matrix[i][9])
+                }
+            } else {
+                when (string[i]) {
+                    '0' -> cont0++
+                    '2' -> result.add(matrix[1][2])
+                    '3' -> result.add(matrix[1][3])
+                    '4' -> result.add(matrix[1][4])
+                    '5' -> result.add(matrix[1][5])
+                    '6' -> result.add(matrix[1][6])
+                    '7' -> result.add(matrix[1][7])
+                    '8' -> result.add(matrix[1][8])
+                    '9' -> result.add(matrix[1][9])
                 }
             }
-            else{
-                when(string[i]){
-                    '0'-> cont0++
-                    '1'-> result.add(matrix[2][1])
-                    '2'-> result.add(matrix[2][2])
-                    '3'-> result.add(matrix[2][3])
-                    '4'-> result.add(matrix[2][4])
-                    '5'-> result.add(matrix[2][5])
-                    '6'-> result.add(matrix[2][6])
-                    '7'-> result.add(matrix[2][7])
-                    '8'-> result.add(matrix[2][8])
-                    '9'-> result.add(matrix[2][9])
+        }
+        if (i == 5) {
+            if (string[3] == '0' && string[4] == '0') {
+                when (string[i]) {
+                    '0' -> cont0++
+                    '1' -> result.add(matrix[i][1])
+                    '2' -> result.add(matrix[i][2])
+                    '3' -> result.add(matrix[i][3])
+                    '4' -> result.add(matrix[i][4])
+                    '5' -> result.add(matrix[i][5])
+                    '6' -> result.add(matrix[i][6])
+                    '7' -> result.add(matrix[i][7])
+                    '8' -> result.add(matrix[i][8])
+                    '9' -> result.add(matrix[i][9])
+                }
+            } else {
+                when (string[i]) {
+                    '0' -> cont0++
+                    '1' -> result.add(matrix[2][1])
+                    '2' -> result.add(matrix[2][2])
+                    '3' -> result.add(matrix[2][3])
+                    '4' -> result.add(matrix[2][4])
+                    '5' -> result.add(matrix[2][5])
+                    '6' -> result.add(matrix[2][6])
+                    '7' -> result.add(matrix[2][7])
+                    '8' -> result.add(matrix[2][8])
+                    '9' -> result.add(matrix[2][9])
                 }
             }
         }
 
         i++
     }
-    i=i-cont0
-    while(i>=0){
-        resp+=result[i]
-        if(i!=0) resp+=" "
+    i = i - cont0
+    while (i >= 0) {
+        resp.append(result[i])
+        if (i != 0) resp.append(" ")
         i--
     }
 
-    return resp
+    return resp.toString()
 }
